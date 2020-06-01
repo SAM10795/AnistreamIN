@@ -255,10 +255,9 @@ function makeanimeobject(animeData)
 	
 	animeObject.appendChild(animeImgcontainer);
 	
-	var animePlatform = document.createElement("a");
+	var animePlatform = document.createElement("span");
 	animePlatform.classList.add('anime-platform');
 	animePlatform.title = "Streaming Platform";
-	animePlatform.href = animeData[PLATFORM_URL];
 	
 	var animePlatformIcon = document.createElement("span");
 	animePlatformIcon.classList.add('material-icons');
@@ -266,8 +265,10 @@ function makeanimeobject(animeData)
 	animePlatformIcon.style.marginLeft = "auto";
 	animePlatformIcon.textContent = "ondemand_video";
 	
-	var animePlatformVal = document.createElement("span");
+	var animePlatformVal = document.createElement("a");
 	animePlatformVal.textContent = animeData[PLATFORM];
+	animePlatformVal.href = animeData[PLATFORM_URL];
+	animePlatformVal.style.color = "var(--colorYellow)";
 	
 	var animePlatformPaid = document.createElement("span");
 	animePlatformPaid.classList.add('material-icons');
@@ -301,6 +302,7 @@ function makeanimeobject(animeData)
 
 function populateInit()
 {
+	document.querySelector("div.search-bar input").value = "";
 	var results = document.querySelector("div.results");
 	filterData = data;
 	results.innerHTML = filterData.length + " entries";
@@ -334,20 +336,24 @@ function updateContainer()
 			break;
 		}
 	}
-	let magicGrid = new MagicGrid({
-		container: '.anime-container',
-		animate: false,
-		items: filterData.length,
-		gutter: 16,
-		static: false,
-		useMin: true
-	});
+	
+	if(filterData.length > 0)
+	{
+		let magicGrid = new MagicGrid({
+			container: '.anime-container',
+			animate: false,
+			items: filterData.length,
+			gutter: 16,
+			static: false,
+			useMin: true
+		});
 
-	magicGrid.listen();
+		magicGrid.listen();
 	
-	filterData.forEach(object => {container.appendChild(makeanimeobject(object));});
+		filterData.forEach(object => {container.appendChild(makeanimeobject(object));});
 	
-	magicGrid.positionItems();
+		magicGrid.positionItems();
+	}
 }
 
 function includesNoCase(substr,arr)
@@ -379,6 +385,12 @@ function filterFree(animeObject)
 	return (animeObject[PLATFORM_PAID] == this);
 }
 
+function clickFree()
+{
+	document.querySelector("div.search-bar input").value = "free";
+	searchText();
+}
+
 function searchText()
 {
 	var searchStr = document.querySelector("div.search-bar input").value;
@@ -405,7 +417,14 @@ function searchText()
 				filterData = data.filter(filterText,searchStr);
 			}
 			updateContainer();
-			results.innerHTML = filterData.length + " results found for "+searchStr;
+			if(filterData.length == 1)
+			{
+				results.innerHTML = filterData.length + " result found for \'"+searchStr+"\'";
+			}
+			else
+			{
+				results.innerHTML = filterData.length + " results found for \'"+searchStr+"\'";
+			}
 		}
 		else
 		{
@@ -414,6 +433,7 @@ function searchText()
 	}
 	else
 	{
+		
 		filterData = data.sort(sortScore);
 		updateContainer();
 		results.innerHTML = filterData.length + " entries";

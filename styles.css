@@ -13,13 +13,14 @@
 	--colorBlue: #0056A2;
 	--colorYellow: #FED23E;
 	--colorGray: #455863;
-	--colorLight: #D3E3D9;
+	--colorLight: #E7E6E6;
 	--colorWhite: #FFF;
 	--colorBlack: #000;
 }
 
 body {
 	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .header {
@@ -44,6 +45,15 @@ body {
 	text-align: center;
 	background-color:  #CF0B367F;
 	background-image: linear-gradient(#CF0B36FF, #CF0B364F);
+}
+
+@media only screen and (min-width: 1080px) {
+	.head-content h1 {
+		font-size: 48px;
+	}
+	.head-content p {
+		font-size: 24px;
+	}
 }
 
 .india {
