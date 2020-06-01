@@ -1,10 +1,16 @@
 IMAGE_URL = "img_url";
 ANIME_TITLE = "title";
+ANIME_TITLE_ALT = "title_alt";
 ANIME_SCORE = "score";
 EPISODES = "eps";
 PLATFORM = "platform";
 COMMENTS = "comments";
 GENRES = "genres";
+UPDATED = "updated";
+PLATFORM_URL = "platform_url"
+PLATFORM_PAID = "platform_paid"
+MAL_ID = "id"
+MAL_URL = "url"
 
 var ascending = true;
 
@@ -72,17 +78,17 @@ function sortScore(a,b)
 {
 	if(ascending)
 	{
-		return a["score"] - b["score"];
+		return a[ANIME_SCORE] - b[ANIME_SCORE];
 	}
 	else
 	{
-		return b["score"] - a["score"];
+		return b[ANIME_SCORE] - a[ANIME_SCORE];
 	}
 }
 
 function sortTitle(a,b)
 {
-	if(a["title"] > b["title"])
+	if(a[ANIME_TITLE].toLowerCase() > b[ANIME_TITLE].toLowerCase())
 	{
 		if(ascending)
 		{
@@ -106,17 +112,25 @@ function sortTitle(a,b)
 	}
 }
 
+function getDate(d)
+{
+	var dateParts = d.split("-");
+	var date = new Date(dateParts[2],dateParts[1]-1,dateParts[0]);
+	return date;
+}
+
 function sortDate(a,b)
 {
-	var d1 = new Date(a["updated"]);
-	var d2 = new Date(b["updated"]);
+	var d1 = getDate(a[UPDATED]);
+	var d2 = getDate(b[UPDATED]);
+	
 	if(ascending)
 	{
-		return d1.getTime() - d2.getTime();
+		return d1 > d2;
 	}
 	else
 	{
-		return d2.getTime() - d1.getTime();
+		return d2 > d1;
 	}
 }
 
@@ -180,10 +194,13 @@ function makeanimeobject(animeData)
 {
 	var animeObject = document.createElement("div");
 	animeObject.classList.add("anime-object");
+	//animeObject.setAttribute('data-aos',"fade-up");
 	
-	var animeTitle = document.createElement("div");
+	var animeTitle = document.createElement("a");
 	animeTitle.classList.add("anime-title");
 	animeTitle.textContent = animeData[ANIME_TITLE];
+	animeTitle.title = "Anime Title";
+	animeTitle.href = animeData[MAL_URL];
 	
 	animeObject.appendChild(animeTitle);
 	
@@ -192,6 +209,7 @@ function makeanimeobject(animeData)
 	
 	var animeScore = document.createElement("span");
 	animeScore.classList.add('anime-score');
+	animeScore.title = "MAL Rating";
 	
 	var animeScoreIcon = document.createElement("span");
 	animeScoreIcon.classList.add('material-icons');
@@ -207,6 +225,7 @@ function makeanimeobject(animeData)
 	
 	var animeEpisodes = document.createElement("span");
 	animeEpisodes.classList.add('anime-episodes');
+	animeEpisodes.title = "Episodes available";
 	
 	var animeEpisodesIcon = document.createElement("span");
 	animeEpisodesIcon.classList.add('material-icons');
@@ -225,33 +244,53 @@ function makeanimeobject(animeData)
 	var animeGenre = document.createElement("div");
 	animeGenre.classList.add('anime-genres');
 	animeGenre.textContent = getGenreText(animeData[GENRES]);
+	animeGenre.title = "Genres";
 	
 	animeObject.appendChild(animeGenre);
 	
 	var animeImgcontainer = document.createElement("div");
 	animeImgcontainer.setAttribute('class','anime-img-container');
 	animeImgcontainer.style.backgroundImage = "url(\'"+animeData[IMAGE_URL]+"\')";
+	animeImgcontainer.title = "Anime Cover Image";
 	
 	animeObject.appendChild(animeImgcontainer);
 	
-	var animePlatform = document.createElement("div");
+	var animePlatform = document.createElement("a");
 	animePlatform.classList.add('anime-platform');
+	animePlatform.title = "Streaming Platform";
+	animePlatform.href = animeData[PLATFORM_URL];
 	
 	var animePlatformIcon = document.createElement("span");
 	animePlatformIcon.classList.add('material-icons');
 	animePlatformIcon.style.fontSize = "18px";
+	animePlatformIcon.style.marginLeft = "auto";
 	animePlatformIcon.textContent = "ondemand_video";
 	
 	var animePlatformVal = document.createElement("span");
 	animePlatformVal.textContent = animeData[PLATFORM];
 	
+	var animePlatformPaid = document.createElement("span");
+	animePlatformPaid.classList.add('material-icons');
+	animePlatformPaid.style.fontSize = "18px";
+	animePlatformPaid.style.marginLeft = "auto";
+	if(animeData[PLATFORM_PAID] == 1)
+	{
+		animePlatformPaid.textContent = "attach_money";
+	}
+	else
+	{
+		animePlatformPaid.textContent = "money_off";
+	}
+	
 	animePlatform.appendChild(animePlatformIcon);
 	animePlatform.appendChild(animePlatformVal);
+	animePlatform.appendChild(animePlatformPaid);
 	animeObject.appendChild(animePlatform);
 	
 	var animeComments = document.createElement("div");
 	animeComments.classList.add('anime-comments');
 	animeComments.textContent = animeData[COMMENTS];
+	animeComments.title = "Additional Info";
 	
 	if(animeData[COMMENTS].length > 0)
 	{
@@ -263,15 +302,16 @@ function makeanimeobject(animeData)
 function populateInit()
 {
 	var results = document.querySelector("div.results");
-	filterData = data.sort(sortTitle);
+	filterData = data;
 	results.innerHTML = filterData.length + " entries";
-	clickAlphAZ();
+	clickScoreHL();
 }
 
 function updateContainer()
 {
 	remakeContainer();
 	container = document.querySelector(".anime-container");
+	container.setAttribute('data-aos','fade-up');
 	switch(sortMethod)
 	{
 		case 0:
@@ -296,7 +336,7 @@ function updateContainer()
 	}
 	let magicGrid = new MagicGrid({
 		container: '.anime-container',
-		animate: true,
+		animate: false,
 		items: filterData.length,
 		gutter: 16,
 		static: false,
@@ -328,10 +368,15 @@ function includesNoCase(substr,arr)
 
 function filterText(animeObject)
 {
-	let title = animeObject["title"].toLowerCase();
-	let platform = animeObject["platform"].toLowerCase();
-	return title.includes(this.toLowerCase()) || includesNoCase(this.toLowerCase(),animeObject["title_alt"]) 
-		|| includesNoCase(this.toLowerCase(),animeObject["genres"]) || platform.includes(this.toLowerCase());
+	let title = animeObject[ANIME_TITLE].toLowerCase();
+	let platform = animeObject[PLATFORM].toLowerCase();
+	return title.includes(this.toLowerCase()) || includesNoCase(this.toLowerCase(),animeObject[ANIME_TITLE_ALT]) 
+		|| includesNoCase(this.toLowerCase(),animeObject[GENRES]) || platform.includes(this.toLowerCase());
+}
+
+function filterFree(animeObject)
+{
+	return (animeObject[PLATFORM_PAID] == this);
 }
 
 function searchText()
@@ -342,7 +387,23 @@ function searchText()
 	{
 		if(searchStr.length >= 3)
 		{
-			filterData = data.filter(filterText,searchStr);
+			if(searchStr.toLowerCase().includes("free") || 
+			searchStr.toLowerCase().includes("paid") || 
+			searchStr.toLowerCase().includes("premium"))
+			{
+				if(searchStr.toLowerCase().includes("free"))
+				{
+					filterData = data.filter(filterFree,0);
+				}
+				else
+				{
+					filterData = data.filter(filterFree,1);
+				}
+			}
+			else 
+			{
+				filterData = data.filter(filterText,searchStr);
+			}
 			updateContainer();
 			results.innerHTML = filterData.length + " results found for "+searchStr;
 		}
@@ -353,7 +414,7 @@ function searchText()
 	}
 	else
 	{
-		filterData = data.sort(sortTitle);
+		filterData = data.sort(sortScore);
 		updateContainer();
 		results.innerHTML = filterData.length + " entries";
 	}

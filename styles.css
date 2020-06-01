@@ -50,6 +50,14 @@ body {
 	color: var(--colorYellow);
 }
 
+.container {
+	background-color: var(--colorLight);
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	padding-bottom: 32px;
+}
+
 .search-bar {
 	margin-top: 32px;
 	margin-left: 96px;
@@ -122,22 +130,56 @@ button {
 	padding: 8px 24px;
 }
 
+button:hover {
+	background-color: var(--colorBlue);
+	color: var(--colorLight);
+	border-left: 1px solid var(--colorLight);
+	border-right: 1px solid var(--colorLight);
+}
+
 .sort-dropdown:hover > span > .dropdown, .dropdown:hover {
 	visibility: visible;
 	opacity: 1;
 	display: block;
 }
 
-.dropdown button:hover {
-	background-color: var(--colorGray);
-}
 
-.container {
-	background-color: var(--colorLight);
-	display: flex;
-	flex-direction: column;
-	margin: auto;
-	padding-bottom: 32px;
+@media only screen and (max-width: 480px) {
+  .search-bar {
+	margin-left: 48px;
+	margin-right: 48px;
+	}
+
+	.results {
+		margin: 16px 48px;
+	}
+	
+	.sort-dropdown {
+		flex-grow: 1;
+	}
+
+	.sort-dropdown span.value {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	.dropdown {
+		margin-left: -24px;
+	}
+
+	button {
+		margin-right: auto;
+		background-color: var(--colorLight);
+		color: var(--colorBlue);
+		position: relative;
+		display: block;
+		border: 1px solid var(--colorBlue);
+		border-top: 0;
+		clear: both;
+		z-index: 1;
+		width: 100%;
+		padding: 8px 24px;
+	}
 }
 
 .anime-container {
@@ -152,6 +194,14 @@ button {
 	color: var(--colorLight);
 	background-color: var(--colorBlue);
 	font-size: 16px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 .anime-title {
