@@ -194,7 +194,7 @@ function makeanimeobject(animeData)
 {
 	var animeObject = document.createElement("div");
 	animeObject.classList.add("anime-object");
-	//animeObject.setAttribute('data-aos',"fade-up");
+	animeObject.setAttribute('data-aos',"fade-up");
 	
 	var animeTitle = document.createElement("a");
 	animeTitle.classList.add("anime-title");
@@ -339,20 +339,7 @@ function updateContainer()
 	
 	if(filterData.length > 0)
 	{
-		let magicGrid = new MagicGrid({
-			container: '.anime-container',
-			animate: false,
-			items: filterData.length,
-			gutter: 16,
-			static: false,
-			useMin: true
-		});
-
-		magicGrid.listen();
-	
 		filterData.forEach(object => {container.appendChild(makeanimeobject(object));});
-	
-		magicGrid.positionItems();
 	}
 }
 

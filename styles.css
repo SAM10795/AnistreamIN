@@ -1,19 +1,12 @@
-/*
-	Purple --colorPrimary:#977dff;
-	Turquoise Green --colorPrimary:#7effbd; - Light doesnt work
-	Parrot Green --colorPrimary:#AFFF88; - Light doesn't work
-	Light Red --colorPrimary: #FF7A7A;
-	Lavender --colorPrimary: #FF85A8;
-*/
 @charset "UTF-8";
 
 :root {
-	--colorBG: #F5F5F5;
-	--colorRed: #CF0B36;
-	--colorBlue: #0056A2;
-	--colorYellow: #FED23E;
-	--colorGray: #455863;
-	--colorLight: #E7E6E6;
+	--colorBG: #FDFFFC;
+	--colorRed: #C1292E;
+	--colorBlue: #235789;
+	--colorYellow: #F1D302;
+	--colorGray: #020100;
+	--colorLight: #FDFFFC;
 	--colorWhite: #FFF;
 	--colorBlack: #000;
 }
@@ -25,7 +18,7 @@ body {
 
 .header {
 	background-image: url('https://comicvine1.cbsistatic.com/uploads/scale_super/11129/111296040/5517993-4131499886-144401.jpeg');
-	background-color: var(--colorRed);
+	background-color: var(--colorBlue);
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -43,8 +36,8 @@ body {
 	width: 100%;
 	height: 100vh;
 	text-align: center;
-	background-color:  #CF0B367F;
-	background-image: linear-gradient(#CF0B36FF, #CF0B364F);
+	background-color:  #2357897F;
+	background-image: linear-gradient(#235789FF, #C1292E7F);
 }
 
 @media only screen and (min-width: 1080px) {
@@ -80,7 +73,7 @@ body {
 }
 
 .search-bar span {
-	color: var(--colorBlue);
+	color: var(--colorRed);
 	margin-top: auto;
 	margin-bottom: 4px;
 }
@@ -88,17 +81,17 @@ body {
 input[type=text] {
 	box-sizing: border-box;
 	background-color: var(--colorLight);
-	color: var(--colorBlue);
+	color: var(--colorRed);
 	padding-bottom: 8px;
 	border: 0;
-	border-bottom: 2px solid var(--colorBlue);
+	border-bottom: 2px solid var(--colorRed);
 	flex-grow: 1;
 }
 
 .results {
 	margin: 16px 96px;
 	padding-left: 24px;
-	color: var(--colorBlue);
+	color: var(--colorRed);
 }
 
 .sort-dropdown {
@@ -106,8 +99,8 @@ input[type=text] {
 	flex-direction: auto;
 	margin-left: 8px;
 	padding: 8px;
-	border: 1px solid var(--colorBlue);
-	color: var(--colorBlue);
+	border: 1px solid var(--colorRed);
+	color: var(--colorRed);
 }
 
 .sort-dropdown span.value {
@@ -129,10 +122,10 @@ input[type=text] {
 button {
 	margin-right: auto;
 	background-color: var(--colorLight);
-	color: var(--colorBlue);
+	color: var(--colorRed);
 	position: relative;
 	display: block;
-	border: 1px solid var(--colorBlue);
+	border: 1px solid var(--colorRed);
 	border-top: 0;
 	clear: both;
 	z-index: 1;
@@ -141,7 +134,7 @@ button {
 }
 
 button:hover {
-	background-color: var(--colorBlue);
+	background-color: var(--colorRed);
 	color: var(--colorLight);
 	border-left: 1px solid var(--colorLight);
 	border-right: 1px solid var(--colorLight);
@@ -180,10 +173,10 @@ button:hover {
 	button {
 		margin-right: auto;
 		background-color: var(--colorLight);
-		color: var(--colorBlue);
+		color: var(--colorRed);
 		position: relative;
 		display: block;
-		border: 1px solid var(--colorBlue);
+		border: 1px solid var(--colorRed);
 		border-top: 0;
 		clear: both;
 		z-index: 1;
@@ -194,6 +187,10 @@ button:hover {
 
 .anime-container {
 	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .anime-object {
@@ -204,6 +201,7 @@ button:hover {
 	color: var(--colorLight);
 	background-color: var(--colorBlue);
 	font-size: 16px;
+	margin: 8px;
 }
 
 a:link {
@@ -276,9 +274,10 @@ a:hover {
 }
 
 .anime-img-container {
-	height: 300px;
+	min-height: 250px;
+	flex-grow: 1;
 	background-color: var(--colorGray);
-	background-position: top;
+	background-position: center top;
 	background-size: cover;
 }
 
