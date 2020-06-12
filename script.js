@@ -14,6 +14,9 @@ MAL_URL = "url"
 
 var ascending = true;
 
+FULL_STAR = "star ";
+HALF_STAR = "star_half ";
+
 //alphabetical = 0
 //score = 1
 //date = 2
@@ -162,6 +165,22 @@ function remakeContainer()
 	mainContainer.appendChild(animeContainer);
 }
 
+function getStar(score)
+{
+	var star_rate = "";
+	var score_round = Math.round(score);
+	var i;
+	for(i=0;i<Math.floor(score_round/2);i++)
+	{
+		star_rate = star_rate + FULL_STAR;
+	}
+	if(score_round%2 == 1)
+	{
+		star_rate = star_rate + HALF_STAR;
+	}
+	return star_rate;
+}
+
 /*
 <div class = "anime-object">
 	<div class="anime-title">
@@ -214,13 +233,10 @@ function makeanimeobject(animeData)
 	var animeScoreIcon = document.createElement("span");
 	animeScoreIcon.classList.add('material-icons');
 	animeScoreIcon.style.fontSize = "14px";
-	animeScoreIcon.textContent = "star_rate";
-	
-	var animeScoreVal = document.createElement("span");
-	animeScoreVal.textContent = animeData[ANIME_SCORE];
+	animeScoreIcon.title = animeData[ANIME_SCORE];
+	animeScoreIcon.textContent = getStar(animeData[ANIME_SCORE]);
 	
 	animeScore.appendChild(animeScoreIcon);
-	animeScore.appendChild(animeScoreVal);
 	animeInfo.appendChild(animeScore);
 	
 	var animeEpisodes = document.createElement("span");
