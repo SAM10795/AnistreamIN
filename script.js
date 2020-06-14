@@ -355,7 +355,9 @@ function updateContainer()
 	
 	if(filterData.length > 0)
 	{
-		filterData.forEach(object => {container.appendChild(makeanimeobject(object));});
+		let documentFragment = document.createDocumentFragment();
+		filterData.forEach(object => {documentFragment.appendChild(makeanimeobject(object));});
+		container.appendChild(documentFragment);
 	}
 }
 

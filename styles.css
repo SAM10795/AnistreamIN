@@ -196,13 +196,12 @@ button:hover {
 }
 
 .anime-object {
-	max-width: 288px;
-	width: 256px;
+	max-width: 256px;
+	width: 220px;
 	display:flex;
 	flex-direction: column;
 	color: var(--colorLight);
 	background-color: var(--colorBlue);
-	font-size: 16px;
 	margin: 8px;
 }
 
@@ -215,6 +214,7 @@ a:hover {
 }
 
 .anime-title {
+	font-size: 16px;
 	padding: 8px;
 	padding-bottom: 4px;
 	font-weight: bold;
@@ -232,7 +232,7 @@ a:hover {
 
 .anime-score {
 	flex-grow: 1;
-	padding: 8px;
+	padding: 4px 8px;
 	margin-left: auto;
 	display: flex;
 	flex-direction: row;
@@ -240,22 +240,12 @@ a:hover {
 	border-right: 1px solid var(--colorYellow);
 }
 
-.anime-score span {
-	padding-left: 4px;
-	padding-right: 4px;
-}
-
 .anime-episodes {
 	flex-grow: 1;
-	padding: 8px;
+	padding: 4px 8px;
 	margin-left: auto;
 	display: flex;
 	flex-direction: row;
-}
-
-.anime-episodes span {
-	padding-left: 4px;
-	padding-right: 4px;
 }
 
 .anime-episodes span.material-icons {
@@ -272,7 +262,7 @@ a:hover {
 }
 
 .anime-img-container {
-	min-height: 250px;
+	min-height: 200px;
 	flex-grow: 1;
 	background-color: var(--colorGray);
 	background-position: center top;
@@ -280,6 +270,7 @@ a:hover {
 }
 
 .anime-platform {
+	font-size: 14px;
 	padding: 8px;
 	color: var(--colorYellow);
 	display: flex;
