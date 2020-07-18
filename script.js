@@ -21,7 +21,8 @@ HALF_STAR = "star_half ";
 //score = 1
 //date = 2
 var sortMethod = 0;
-var filterData = data;
+var filterData = dataVariable();
+var malData;
 
 function clickAlphAZ()
 {
@@ -320,16 +321,18 @@ function populateInit()
 {
 	document.querySelector("div.search-bar input").value = "";
 	var results = document.querySelector("div.results");
-	filterData = data;
+	filterData = dataVariable();
 	results.innerHTML = filterData.length + " entries";
 	clickScoreHL();
 }
 
 function updateContainer()
 {
+
 	remakeContainer();
 	container = document.querySelector(".anime-container");
 	container.setAttribute('data-aos','fade-up');
+
 	switch(sortMethod)
 	{
 		case 0:
@@ -359,6 +362,11 @@ function updateContainer()
 		filterData.forEach(object => {documentFragment.appendChild(makeanimeobject(object));});
 		container.appendChild(documentFragment);
 	}
+
+	setTimeout(()=>{
+		spinnerVisible('none')
+	}, 1000)
+
 }
 
 function includesNoCase(substr,arr)
@@ -410,16 +418,16 @@ function searchText()
 			{
 				if(searchStr.toLowerCase().includes("free"))
 				{
-					filterData = data.filter(filterFree,0);
+					filterData = dataVariable().filter(filterFree,0);
 				}
 				else
 				{
-					filterData = data.filter(filterFree,1);
+					filterData = dataVariable().filter(filterFree,1);
 				}
 			}
 			else 
 			{
-				filterData = data.filter(filterText,searchStr);
+				filterData = dataVariable().filter(filterText,searchStr);
 			}
 			updateContainer();
 			if(filterData.length == 1)
@@ -438,9 +446,86 @@ function searchText()
 	}
 	else
 	{
-		
-		filterData = data.sort(sortScore);
+		filterData = dataVariable().sort(sortScore);
 		updateContainer();
 		results.innerHTML = filterData.length + " entries";
 	}
+}
+
+function getAnimeListByUser(id, offset) {
+	return new Promise((res, rej) => {
+		const theUrl = `https://myanimelist.net/animelist/${id}/load.json?status=6${offset ? `&offset=${offset * 300}` : ``}`
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open("GET", theUrl, false); // false for synchronous request
+		xmlHttp.send(null);
+		if (xmlHttp.status == 200) {
+			res(JSON.parse(xmlHttp.responseText))
+		} else {
+			rej(xmlHttp.status);
+		}
+	})
+}
+
+function getUserFromMal() {
+
+	const id = prompt("Enter MAL ID");
+	if (id === null) {
+		return
+	}
+	if (!id.length) {
+		return
+	}
+	var results = document.querySelector("div.results");
+	let anime = [];
+	spinnerVisible('block')
+	setTimeout(async () => {
+		await Promise.resolve().then(function resolver(i) {
+			return getAnimeListByUser(id, i)
+				.then(d => d
+				).catch((error) => {
+				})
+				.then(d => {
+					if (d) {
+						anime = anime.concat(d)
+					}
+					if (d.length < 300) {
+						malData = data.filter(d => {
+							if (anime.find(x => x.anime_id === d.id)) {
+								return d;
+							}
+						});
+						if (malData) {
+							filterData = malData
+						}
+						updateContainer();
+						document.querySelector("div.search-bar input").value = '';
+						document.getElementById('clearFilterButton').style.display = 'block'
+						results.innerHTML = filterData.length + " entries";
+						return
+					}
+					resolver(i ? i + 1 : 0 + 1)
+				}
+				);
+		}).catch((error) => {
+		})
+	}, 10)
+}
+
+function spinnerVisible(status) {
+	document.getElementById('spinner').style.display = status
+}
+
+function dataVariable() {
+	return malData ? malData : data;
+}
+
+function clearMalFilter() {
+	spinnerVisible('block')
+	setTimeout(() => {
+		malData = undefined;
+		filterData = dataVariable()
+		document.querySelector("div.search-bar input").value = '';
+		searchText()
+		document.getElementById('clearFilterButton').style.display = 'none'
+	}, 10);
 }

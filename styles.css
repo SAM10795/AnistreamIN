@@ -301,3 +301,43 @@ a:hover {
 	margin: auto;
 	text-align: center;
 }
+/* Spinner */
+#spinner{
+	height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
+    margin: 0px;
+    left: 0;
+}
+
+.ring {
+    display: inline-block;
+    position: absolute;
+    top: calc(50vh - 40px);
+    left: calc(50vw - 40px);
+
+  }
+  .ring:after {
+	content: " ";
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin: 8px;
+	border-radius: 50%;
+	border: 6px solid #cef;
+	border-color: #cef transparent #cef transparent;
+	animation: ring 1.2s linear infinite;
+  }
+
+  @keyframes ring {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+  }
+  

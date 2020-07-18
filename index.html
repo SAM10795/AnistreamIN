@@ -13,6 +13,7 @@
 <script type="text/javascript" src="script.js"></script>
 <title>AnistreamIN | Legally Streamable Anime in India</title>
 </head>
+<div id="spinner"><div class="ring"></div></div>
 <body onload="populateInit()">
 
 <div class = "header">
@@ -37,6 +38,8 @@
 					<button onclick="clickDateNO()">Updated (New - Old)</button>
 					<button onclick="clickDateON()">Updated (Old - New)</button>
 					<button onclick="clickFree()">Free to Watch</button>
+					<button onclick="getUserFromMal()">By MAL User</button>
+					<button onclick="clearMalFilter()" id="clearFilterButton" style="display: none;">Clear MAL Filter</button>
 			</div>
 			</span>
 		</div>
