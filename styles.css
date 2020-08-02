@@ -476,6 +476,49 @@ a:hover {
     text-align: center;
 }
 
+a#Ani-One {
+	background: #fff;
+	color: #000;
+}
+
+a#CONtv {
+	background: #000;
+	color: #fff;
+}
+
+a#Crunchyroll {
+	background: #fff;
+	color: #DF6300;
+}
+
+a#GundamInfo {
+	background: #000;
+	color: #ff0;
+}
+
+a#MuseAsia {
+	background: #F7941D;
+	color: #000;	
+}
+
+a#Netflix {
+	background: #000;
+	color: #F00;	
+}
+a#PrimeVideo {
+	background: #15317E;
+	color: #FFF;	
+}
+a#Youtube {
+	background: #F00;
+	color: #FFF;	
+}
+
+a#tubiTV {
+	background: #eee;
+	color: #ff8c00;
+}
+
 .anime-score {
 	padding: 4px;
 	border-left: 1px solid var(--colorCrimson);

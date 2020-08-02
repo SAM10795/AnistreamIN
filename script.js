@@ -242,6 +242,7 @@ function makeanimeobject(animeData)
 	
 	var animePlatformLink = document.createElement("a");
 	animePlatformLink.href = animeData[PLATFORM_URL];
+	animePlatformLink.id = animeData[PLATFORM].split(" ").join("");
 	animePlatformLink.textContent = animeData[PLATFORM][0];
 	
 	animePlatform.appendChild(animePlatformLink);
