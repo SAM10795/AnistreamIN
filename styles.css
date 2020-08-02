@@ -315,7 +315,7 @@ button:hover {
 
 .results {
 	padding-left: 24px;
-	color: var(--colorCrimson);
+	color: var(--colorLight);
 	flex-grow: 1;
 	margin-top: auto;
 	margin-bottom: auto;
@@ -377,6 +377,25 @@ button.labels {
 	}
 	.action-bottom {
 		margin: 16px 28px;
+	}
+}
+
+@media only screen and (max-width: 392px) {
+	.search-container {
+		min-width: 0;
+	}
+	.search-bar {
+		min-width: 0;
+	}
+	.sort-dropdown {
+		min-width: 0;
+	}
+	.search-bar {
+		margin-left: auto;
+		margin-right: auto;
+	}		
+	.action-bottom {
+		margin: 16px 4px;
 	}
 }
 
