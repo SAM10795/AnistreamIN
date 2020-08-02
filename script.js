@@ -12,7 +12,7 @@ PLATFORM_PAID = "platform_paid"
 MAL_ID = "id"
 MAL_URL = "url"
 
-var ascending = true;
+var ascending = false;
 
 FULL_STAR = "star ";
 HALF_STAR = "star_half ";
@@ -20,13 +20,18 @@ HALF_STAR = "star_half ";
 //alphabetical = 0
 //score = 1
 //date = 2
-var sortMethod = 0;
-var filterData = dataVariable();
-var malData;
+var sortMethod = 1;
+var platformData = data;
+var displayData = platformData;
+//select all = 1
+//indeterminate = 0
+//none selected = -1
+var platformChecked = 1;
+var free = 0;
 
 function clickAlphAZ()
 {
-	var topText = document.querySelector(".value text");
+	var topText = document.querySelector(".value");
 	topText.textContent = "Title (A - Z)";
 	ascending = true;
 	sortMethod = 0;
@@ -35,7 +40,7 @@ function clickAlphAZ()
 
 function clickAlphZA()
 {
-	var topText = document.querySelector(".value text");
+	var topText = document.querySelector(".value");
 	topText.textContent = "Title (Z - A)";
 	ascending = false;
 	sortMethod = 0;
@@ -44,7 +49,7 @@ function clickAlphZA()
 
 function clickScoreLH()
 {
-	var topText = document.querySelector(".value text");
+	var topText = document.querySelector(".value");
 	topText.textContent = "Score (Low - High)";
 	ascending = true;
 	sortMethod = 1;
@@ -53,7 +58,7 @@ function clickScoreLH()
 
 function clickScoreHL()
 {
-	var topText = document.querySelector(".value text");
+	var topText = document.querySelector(".value");
 	topText.textContent = "Score (High - Low)";
 	ascending = false;
 	sortMethod = 1;
@@ -62,7 +67,7 @@ function clickScoreHL()
 
 function clickDateON()
 {
-	var topText = document.querySelector(".value text");
+	var topText = document.querySelector(".value");
 	topText.textContent = "Updated (Old - New)";
 	ascending = true;
 	sortMethod = 2;
@@ -71,7 +76,7 @@ function clickDateON()
 
 function clickDateNO()
 {
-	var topText = document.querySelector(".value text");
+	var topText = document.querySelector(".value");
 	topText.textContent = "Updated (New - Old)";
 	ascending = false;
 	sortMethod = 2;
@@ -183,27 +188,21 @@ function getStar(score)
 }
 
 /*
-<div class = "anime-object">
-	<div class="anime-title">
-		7 Seeds
+<div class="anime-object aos-init aos-animate" data-aos="fade-up">
+	<a class="anime-title" title="Anime Title" href="https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood">
+		Fullmetal Alchemist: Brotherhood
+	</a>
+	<div class="anime-img-container">
+		<img src="https://cdn.myanimelist.net/images/anime/1223/96541.jpg" title="Anime Cover Image">
 	</div>
-	<div class="anime-info">
-		<span class="anime-episodes">
-			<span class="material-icons">playlist_play</span><span>12</span>
+	<div class="anime-brief">
+		<span class="platform-icon">
+			<a href="https://www.netflix.com/in/" style="color:var(--colorYellow);">
+				<img src="https://img2.pngio.com/circle-netflix-logo-png-netflix-icon-png-910_910.png" style="height: 24px; width: 24px;">
+			</a>
 		</span>
-		<span class="anime-score">
-			<span class="material-icons">star_rate</span><span>6.52</span>
-		</span>
-	</div>
-	<div class="anime-genres">
-		Sci-Fi, Adventure, Mystery, Psychological, Drama, Romance, Shoujo
-	</div>
-	<div class="anime-img-container" style="background-image: url(&quot;https://cdn.myanimelist.net/images/anime/1305/96703.jpg&quot;);">
-	</div>
-	<div class="anime-platform">
-			<span class="material-icons">ondemand_video</span><span>Netflix</span>
-	</div>
-	<div class="anime-comments">
+		<span class="anime-score">8.93<span class="material-icons" style="font-size: 12px;">star</span></span>
+		<span class="anime-episodes" title="Episodes available"><span class="material-icons" style="font-size: 12px;">playlist_play</span><span>64</span></span>
 	</div>
 </div>
 
@@ -216,54 +215,16 @@ function makeanimeobject(animeData)
 	animeObject.classList.add("anime-object");
 	animeObject.setAttribute('data-aos',"fade-up");
 	
-	var animeTitle = document.createElement("a");
+	var animeTitle = document.createElement("div");
 	animeTitle.classList.add("anime-title");
-	animeTitle.textContent = animeData[ANIME_TITLE];
-	animeTitle.title = "Anime Title";
-	animeTitle.href = animeData[MAL_URL];
+	animeTitle.title = animeData[ANIME_TITLE];
 	
+	var animeTitleContent = document.createElement("a");
+	animeTitleContent.textContent = animeData[ANIME_TITLE];
+	animeTitleContent.href = animeData[MAL_URL];
+	
+	animeTitle.appendChild(animeTitleContent);
 	animeObject.appendChild(animeTitle);
-	
-	var animeInfo = document.createElement("div");
-	animeInfo.classList.add("anime-info");
-	
-	var animeScore = document.createElement("span");
-	animeScore.classList.add('anime-score');
-	animeScore.title = "MAL Rating";
-	
-	var animeScoreIcon = document.createElement("span");
-	animeScoreIcon.classList.add('material-icons');
-	animeScoreIcon.style.fontSize = "14px";
-	animeScoreIcon.title = animeData[ANIME_SCORE];
-	animeScoreIcon.textContent = getStar(animeData[ANIME_SCORE]);
-	
-	animeScore.appendChild(animeScoreIcon);
-	animeInfo.appendChild(animeScore);
-	
-	var animeEpisodes = document.createElement("span");
-	animeEpisodes.classList.add('anime-episodes');
-	animeEpisodes.title = "Episodes available";
-	
-	var animeEpisodesIcon = document.createElement("span");
-	animeEpisodesIcon.classList.add('material-icons');
-	animeEpisodesIcon.style.fontSize = "14px";
-	animeEpisodesIcon.textContent = "playlist_play";
-	
-	var animeEpisodesVal = document.createElement("span");
-	animeEpisodesVal.textContent = animeData[EPISODES];
-	
-	animeEpisodes.appendChild(animeEpisodesIcon);
-	animeEpisodes.appendChild(animeEpisodesVal);
-	animeInfo.appendChild(animeEpisodes);
-	
-	animeObject.appendChild(animeInfo);
-	
-	var animeGenre = document.createElement("div");
-	animeGenre.classList.add('anime-genres');
-	animeGenre.textContent = getGenreText(animeData[GENRES]);
-	animeGenre.title = "Genres";
-	
-	animeObject.appendChild(animeGenre);
 	
 	var animeImgcontainer = document.createElement("div");
 	animeImgcontainer.setAttribute('class','anime-img-container');
@@ -272,82 +233,98 @@ function makeanimeobject(animeData)
 	
 	animeObject.appendChild(animeImgcontainer);
 	
+	var animeBrief = document.createElement("div");
+	animeBrief.classList.add("anime-brief");
+	
 	var animePlatform = document.createElement("span");
-	animePlatform.classList.add('anime-platform');
+	animePlatform.classList.add('platform-icon');
 	animePlatform.title = "Streaming Platform";
 	
-	var animePlatformIcon = document.createElement("span");
-	animePlatformIcon.classList.add('material-icons');
-	animePlatformIcon.style.fontSize = "18px";
-	animePlatformIcon.style.marginLeft = "auto";
-	animePlatformIcon.textContent = "ondemand_video";
+	var animePlatformLink = document.createElement("a");
+	animePlatformLink.href = animeData[PLATFORM_URL];
+	animePlatformLink.textContent = animeData[PLATFORM][0];
 	
-	var animePlatformVal = document.createElement("a");
-	animePlatformVal.textContent = animeData[PLATFORM];
-	animePlatformVal.href = animeData[PLATFORM_URL];
-	animePlatformVal.style.color = "var(--colorYellow)";
+	animePlatform.appendChild(animePlatformLink);
+	animeBrief.appendChild(animePlatform);
 	
-	var animePlatformPaid = document.createElement("span");
-	animePlatformPaid.classList.add('material-icons');
-	animePlatformPaid.style.fontSize = "18px";
-	animePlatformPaid.style.marginLeft = "auto";
-	if(animeData[PLATFORM_PAID] == 1)
-	{
-		animePlatformPaid.textContent = "attach_money";
-	}
-	else
-	{
-		animePlatformPaid.textContent = "money_off";
-	}
+	var animeScore = document.createElement("span");
+	animeScore.classList.add('anime-score');
+	animeScore.title = "MAL Rating";
+	animeScore.title = animeData[ANIME_SCORE];
+	animeScore.textContent = animeData[ANIME_SCORE];
 	
-	animePlatform.appendChild(animePlatformIcon);
-	animePlatform.appendChild(animePlatformVal);
-	animePlatform.appendChild(animePlatformPaid);
-	animeObject.appendChild(animePlatform);
+	var animeScoreIcon = document.createElement("span");
+	animeScoreIcon.classList.add('material-icons');
+	animeScoreIcon.style.fontSize = "12px";
+	animeScoreIcon.textContent = "star";
 	
-	var animeComments = document.createElement("div");
-	animeComments.classList.add('anime-comments');
-	animeComments.textContent = animeData[COMMENTS];
-	animeComments.title = "Additional Info";
+	animeScore.appendChild(animeScoreIcon);
+	animeBrief.appendChild(animeScore);
 	
-	if(animeData[COMMENTS].length > 0)
-	{
-		animeObject.appendChild(animeComments);
-	}	
+	var animeEpisodes = document.createElement("span");
+	animeEpisodes.classList.add('anime-episodes');
+	animeEpisodes.title = "Episodes available";
+	
+	var animeEpisodesIcon = document.createElement("span");
+	animeEpisodesIcon.classList.add('material-icons');
+	animeEpisodesIcon.style.fontSize = "12px";
+	animeEpisodesIcon.textContent = "playlist_play";
+	
+	var animeEpisodesVal = document.createElement("span");
+	animeEpisodesVal.textContent = animeData[EPISODES];
+	
+	animeEpisodes.appendChild(animeEpisodesIcon);
+	animeEpisodes.appendChild(animeEpisodesVal);
+	animeBrief.appendChild(animeEpisodes);
+	
+	animeObject.appendChild(animeBrief);
+		
 	return animeObject;	
 }
 
 function populateInit()
 {
 	document.querySelector("div.search-bar input").value = "";
-	var results = document.querySelector("div.results");
-	filterData = dataVariable();
-	results.innerHTML = filterData.length + " entries";
-	clickScoreHL();
+	updateSelect();
+}
+
+function getCheckedPlatforms()
+{
+	var platforms = document.querySelectorAll(".dropdown .checkbox-container > input");
+	var retVal = [];
+	let i=0;
+	for(i=1;i<platforms.length;i++)
+	{
+		if(platforms[i].checked)
+		{
+			retVal = retVal.concat(platforms[i].id);
+		}
+	}
+	return retVal;
 }
 
 function updateContainer()
 {
-
 	remakeContainer();
-	container = document.querySelector(".anime-container");
-	container.setAttribute('data-aos','fade-up');
-
+	var results = document.querySelector(".results");
+	var search = document.querySelector(".search-container > input");
+	
+	var container = document.querySelector(".anime-container");
 	switch(sortMethod)
 	{
 		case 0:
 		{
-			filterData.sort(sortTitle);
+			displayData.sort(sortTitle);
 			break;
 		}
 		case 1:
 		{
-			filterData.sort(sortScore);
+			displayData.sort(sortScore);
 			break;
 		}
 		case 2:
 		{
-			filterData.sort(sortDate);
+			displayData.sort(sortDate);
 			break;
 		}
 		default:
@@ -356,17 +333,39 @@ function updateContainer()
 		}
 	}
 	
-	if(filterData.length > 0)
+	if(displayData.length > 0)
 	{
 		let documentFragment = document.createDocumentFragment();
-		filterData.forEach(object => {documentFragment.appendChild(makeanimeobject(object));});
+		displayData.forEach(object => {documentFragment.appendChild(makeanimeobject(object));});
 		container.appendChild(documentFragment);
 	}
-
+	
+	if(searchText.value)
+	{
+		if(platformChecked == 0)
+		{
+			results.innerHTML = displayData.length + " entries for "+ searchText.value + " in "+getCheckedPlatforms();
+		}
+		else
+		{
+			results.innerHTML = displayData.length + "entries for "+ searchText.value;
+		}
+	}
+	else
+	{
+		if(platformChecked == 0)
+		{
+			results.innerHTML = displayData.length + " entries in "+getCheckedPlatforms();
+		}
+		else
+		{
+			results.innerHTML = displayData.length + " entries";
+		}
+	}
+	
 	setTimeout(()=>{
 		spinnerVisible('none')
 	}, 1000)
-
 }
 
 function includesNoCase(substr,arr)
@@ -393,6 +392,12 @@ function filterText(animeObject)
 		|| includesNoCase(this.toLowerCase(),animeObject[GENRES]) || platform.includes(this.toLowerCase());
 }
 
+function filterPF(animeObject)
+{
+	let platform = animeObject[PLATFORM].toLowerCase();
+	return platform.includes(this.toLowerCase());
+}
+
 function filterFree(animeObject)
 {
 	return (animeObject[PLATFORM_PAID] == this);
@@ -400,132 +405,97 @@ function filterFree(animeObject)
 
 function clickFree()
 {
-	document.querySelector("div.search-bar input").value = "free";
+	var toggleFree = document.querySelector("button.labels");
+	if(free)
+	{
+		toggleFree.innerHTML = "View Free";
+		free = 0;
+	}
+	else
+	{
+		toggleFree.innerHTML = "View All";
+		free = 1;
+	}
+	searchText();
+}
+
+function filterData()
+{
+	var checkboxes = document.querySelectorAll(".dropdown .checkbox-container > input");
+	var i;
+	platformData = [];
+	var selectAll = true;
+	var selectNone = true;
+	for(i=1;i<checkboxes.length;i++)
+	{
+		selectAll = selectAll && checkboxes[i].checked;
+		selectNone = selectNone && (!checkboxes[i].checked);
+		if(checkboxes[i].checked)
+		{
+			platformData = platformData.concat(data.filter(filterPF,checkboxes[i].id));
+		}
+	}
+	if(selectAll)
+	{
+		checkboxes[0].checked = true;
+		checkboxes[0].indeterminate = false;
+		platformChecked = 1;
+	}
+	else if(selectNone)
+	{
+		checkboxes[0].checked = false;
+		checkboxes[0].indeterminate = false;
+		platformChecked = -1;
+	}
+	else
+	{
+		checkboxes[0].indeterminate = true;
+		platformChecked = 0;
+	}
+	searchText();
+}
+
+function updateSelect()
+{
+	var selectAll = document.querySelectorAll(".dropdown .checkbox-container > input");
+	if(selectAll[0].checked)
+	{
+		platformChecked = 1;
+		platformData = data;
+	}
+	else
+	{
+		platformChecked = -1;
+		platformData = [];
+	}
+	let i=0;
+	for(i=1;i<selectAll.length;i++)
+	{
+		selectAll[i].checked = (platformChecked == 1);
+	}
 	searchText();
 }
 
 function searchText()
 {
 	var searchStr = document.querySelector("div.search-bar input").value;
-	var results = document.querySelector("div.results");
-	if(searchStr)
+	if(searchStr.length >= 3)
 	{
-		if(searchStr.length >= 3)
-		{
-			if(searchStr.toLowerCase().includes("free") || 
-			searchStr.toLowerCase().includes("paid") || 
-			searchStr.toLowerCase().includes("premium"))
-			{
-				if(searchStr.toLowerCase().includes("free"))
-				{
-					filterData = dataVariable().filter(filterFree,0);
-				}
-				else
-				{
-					filterData = dataVariable().filter(filterFree,1);
-				}
-			}
-			else 
-			{
-				filterData = dataVariable().filter(filterText,searchStr);
-			}
-			updateContainer();
-			if(filterData.length == 1)
-			{
-				results.innerHTML = filterData.length + " result found for \'"+searchStr+"\'";
-			}
-			else
-			{
-				results.innerHTML = filterData.length + " results found for \'"+searchStr+"\'";
-			}
-		}
-		else
-		{
-			return;
-		}
+		displayData = platformData.filter(filterText,searchStr);
 	}
 	else
 	{
-		filterData = dataVariable().sort(sortScore);
-		updateContainer();
-		results.innerHTML = filterData.length + " entries";
+		displayData = platformData.sort(sortScore);
 	}
-}
-
-function getAnimeListByUser(id, offset) {
-	return new Promise((res, rej) => {
-		const theUrl = `https://myanimelist.net/animelist/${id}/load.json?status=6${offset ? `&offset=${offset * 300}` : ``}`
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open("GET", theUrl, false); // false for synchronous request
-		xmlHttp.send(null);
-		if (xmlHttp.status == 200) {
-			res(JSON.parse(xmlHttp.responseText))
-		} else {
-			rej(xmlHttp.status);
-		}
-	})
-}
-
-function getUserFromMal() {
-
-	const id = prompt("Enter MAL ID");
-	if (id === null) {
-		return
+	if(free)
+	{
+		displayData = displayData.filter(filterFree,0);
 	}
-	if (!id.length) {
-		return
-	}
-	var results = document.querySelector("div.results");
-	let anime = [];
-	spinnerVisible('block')
-	setTimeout(async () => {
-		await Promise.resolve().then(function resolver(i) {
-			return getAnimeListByUser(id, i)
-				.then(d => d
-				).catch((error) => {
-				})
-				.then(d => {
-					if (d) {
-						anime = anime.concat(d)
-					}
-					if (d.length < 300) {
-						malData = data.filter(d => {
-							if (anime.find(x => x.anime_id === d.id)) {
-								return d;
-							}
-						});
-						if (malData) {
-							filterData = malData
-						}
-						updateContainer();
-						document.querySelector("div.search-bar input").value = '';
-						document.getElementById('clearFilterButton').style.display = 'block'
-						results.innerHTML = filterData.length + " entries";
-						return
-					}
-					resolver(i ? i + 1 : 0 + 1)
-				}
-				);
-		}).catch((error) => {
-		})
-	}, 10)
+	updateContainer();
 }
 
 function spinnerVisible(status) {
 	document.getElementById('spinner').style.display = status
 }
 
-function dataVariable() {
-	return malData ? malData : data;
-}
-
-function clearMalFilter() {
-	spinnerVisible('block')
-	setTimeout(() => {
-		malData = undefined;
-		filterData = dataVariable()
-		document.querySelector("div.search-bar input").value = '';
-		searchText()
-		document.getElementById('clearFilterButton').style.display = 'none'
-	}, 10);
-}
+var timer;

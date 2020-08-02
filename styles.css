@@ -1,12 +1,11 @@
 @charset "UTF-8";
 
 :root {
-	--colorBG: #FDFFFC;
-	--colorRed: #C1292E;
-	--colorBlue: #235789;
-	--colorYellow: #F1D302;
-	--colorGray: #020100;
-	--colorLight: #FDFFFC;
+	--colorDark: #25283D;
+	--colorCrimson: #A71D31;
+	--colorLight: #F1F0CC;
+	--colorGreen: #85BF86;
+	--colorBrown: #8D775F;
 	--colorWhite: #FFF;
 	--colorBlack: #000;
 }
@@ -14,48 +13,90 @@
 body {
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
-	/*font-family: Arial, Helvetica, sans-serif;*/
+	font-size: 12px;
+	color: var(--colorLight);
 }
 
 .header {
-	background-image: url('https://comicvine1.cbsistatic.com/uploads/scale_super/11129/111296040/5517993-4131499886-144401.jpeg');
-	background-color: var(--colorBlue);
+	background-color: var(--colorCrimson);
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	color: var(--colorWhite);
-	align-self: center;
-	min-height: 100vh;
 }
 
 .head-content {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-content: center;
-	justify-content: center;
-	width: 100%;
-	height: 100vh;
-	text-align: center;
-	background-color:  #2357897F;
-	background-image: linear-gradient(#235789FF, #C1292E7F);
+	justify-content: flex-start;
+	padding-left: 24px;
+	padding-right: 24px;
+	align-self: flex-end;
 }
 
-@media only screen and (min-width: 1080px) {
-	.head-content h1 {
-		font-size: 48px;
+div.title {
+	margin: 8px;
+	font-size: 24px;
+}
+
+div.subtitle {
+	margin: 8px;
+	margin-left: auto;
+	margin-top: auto;
+	font-size: 24px;
+	font-variant: small-caps;
+}
+
+@media only screen and (max-width: 800px) {
+	.head-content {
+		flex-direction: column;
 	}
-	.head-content p {
-		font-size: 24px;
+	div.title {
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 0;
+	}
+
+	div.subtitle {
+		margin: 0;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 8px;
+		font-size: 20px;
+		text-align: center;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	.head-content {
+		flex-direction: column;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+	div.title {
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 0;
+	}
+
+	div.subtitle {
+		margin: 0;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 8px;
+		font-size: 16px;
+		text-align: center;
 	}
 }
 
 .india {
-	color: var(--colorYellow);
+	color: var(--colorGreen);
 }
 
 .container {
-	background-color: var(--colorLight);
+	background-color: var(--colorDark);
 	display: flex;
 	flex-direction: column;
 	margin: auto;
@@ -64,6 +105,7 @@ body {
 }
 
 .search-bar {
+	min-width: 360px;
 	margin-top: 32px;
 	margin-left: 96px;
 	margin-right: 96px;
@@ -74,116 +116,267 @@ body {
 	flex-wrap: wrap;
 }
 
-.search-bar span {
-	color: var(--colorRed);
+.search-bar > span {
 	margin-top: auto;
 	margin-bottom: 4px;
 }
 
-input[type=text] {
-	box-sizing: border-box;
-	background-color: var(--colorLight);
-	color: var(--colorRed);
-	padding-bottom: 8px;
-	border: 0;
-	border-bottom: 2px solid var(--colorRed);
+.search-container {
+	min-width: 320px;
 	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	color: var(--colorCrimson);
+	margin-top: auto;
 }
 
-.results {
-	margin: 16px 96px;
-	padding-left: 24px;
-	color: var(--colorRed);
+input[type=text] {
+	flex-grow: 1;
+	box-sizing: border-box;
+	background-color: var(--colorDark);
+	color: var(--colorLight);
+	padding-bottom: 4px;
+	border: 0;
+	border-bottom: 2px solid var(--colorCrimson);
 }
 
 .sort-dropdown {
 	display: flex;
-	flex-direction: auto;
+	flex-direction: column;
 	margin-left: 8px;
+	position: relative;
+	font-size: 12px;
+	min-width: 180px;
+}
+
+.sort-dropdown > span {
+	color: var(--colorCrimson);
+	margin-bottom: 4px;
+}
+
+.labels {
+	display: flex;
+	border: 1px solid var(--colorCrimson);
+	color: var(--colorLight);
+	background-color: var(--colorDark);
 	padding: 8px;
-	border: 1px solid var(--colorRed);
-	color: var(--colorRed);
+}
+
+.sort-menu {
+}
+
+.filter-platform {
+}
+
+.filter-genre {
 }
 
 .sort-dropdown span.value {
-	padding-left: 48px;
-	padding-right: 48px;
+	padding-left: 24px;
+	padding-right: 24px;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 .dropdown {
 	position: absolute;
 	transition: all 0.5s ease;
-	margin-left: -48px;
-	margin-top: 12px;
+	margin-top: 32px;
 	padding-top: 8px;
+	width: 100%;
 	visibility: hidden;
 	opacity: 0;
 	display: none;
+	color: var(--colorCrimson);
+	background-color: var(--colorDark);
 }
 
-button {
+.dropdown button {
 	margin-right: auto;
-	background-color: var(--colorLight);
-	color: var(--colorRed);
+	background-color: var(--colorDark);
+	color: var(--colorLight);
 	position: relative;
 	display: block;
-	border: 1px solid var(--colorRed);
+	border: 1px solid var(--colorCrimson);
 	border-top: 0;
 	clear: both;
 	z-index: 1;
 	width: 100%;
 	padding: 8px 24px;
+	text-align: start;
+}
+
+.checkbox-container {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: var(--colorLight);
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	border: 1px solid var(--colorCrimson);
+	border-top: 0;
+	z-index: 1;
+	padding: 12px;
+	padding-left: 36px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  height: 16px;
+  width: 16px;
+  background-color: var(--colorWhite);
+  border: 1px solid var(--colorCrimson);
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: var(--colorLight);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--colorCrimson);
+}
+
+.checkbox-container input:indeterminate ~ .checkmark {
+  background-color: var(--colorCrimson);
+  height: 10px;
+  width: 10px;
+  border: 3px solid white  
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:indeterminate ~ .checkmark:after {
+  display: none;
+}
+
+.text-label {
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 button:hover {
-	background-color: var(--colorRed);
 	color: var(--colorLight);
 	border-left: 1px solid var(--colorLight);
 	border-right: 1px solid var(--colorLight);
 }
 
-.sort-dropdown:hover > span > .dropdown, .dropdown:hover {
+.checkbox-container:hover {
+	color: var(--colorLight);
+	border-left: 1px solid var(--colorLight);
+	border-right: 1px solid var(--colorLight);
+}
+
+.sort-dropdown:hover > div.dropdown, .dropdown:hover {
 	visibility: visible;
 	opacity: 1;
 	display: block;
 }
 
+.action-bottom {
+	margin: 16px 96px;
+	display: flex;
+	flex-direction: row;
+}
 
-@media only screen and (max-width: 480px) {
-  .search-bar {
-	margin-left: 48px;
-	margin-right: 48px;
-	}
+.results {
+	padding-left: 24px;
+	color: var(--colorCrimson);
+	flex-grow: 1;
+	margin-top: auto;
+	margin-bottom: auto;
+	text-align: start;
+}
 
-	.results {
-		margin: 16px 48px;
+button.labels {
+	width: 100px;
+	display: block;
+	text-align: center;
+}
+
+@media only screen and (max-width: 1150px) {
+	.search-bar {
+		margin-left: 48px;
+		margin-right: 48px;
 	}
-	
+	.search-container {
+		width: 100%;
+		margin-bottom: 16px;
+	}
 	.sort-dropdown {
 		flex-grow: 1;
+		margin-top: 8px;
+		margin-left: 4px;
+		margin-right: 4px;
 	}
-
-	.sort-dropdown span.value {
-		padding-left: 24px;
-		padding-right: 24px;
+	.action-bottom {
+		margin-left: 52px;
+		margin-right: 52px;
 	}
-
-	.dropdown {
-		margin-left: -24px;
+	.results {
+		padding-left: 0;
 	}
+}
 
-	button {
-		margin-right: auto;
-		background-color: var(--colorLight);
-		color: var(--colorRed);
-		position: relative;
-		display: block;
-		border: 1px solid var(--colorRed);
-		border-top: 0;
-		clear: both;
-		z-index: 1;
+@media only screen and (max-width: 720px) {
+	.sort-dropdown {
 		width: 100%;
-		padding: 8px 24px;
+	}
+	
+	.sort-dropdown:hover > div.dropdown, .dropdown:hover {
+		position: inherit;
+		visibility: visible;
+		opacity: 1;
+		display: block;
+	}
+	
+	.dropdown {
+		margin: 0;
+		padding-top: 8px;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	.search-bar {
+		margin-left: 24px;
+		margin-right: 24px;
+	}
+	.action-bottom {
+		margin: 16px 28px;
 	}
 }
 
@@ -197,12 +390,28 @@ button:hover {
 
 .anime-object {
 	max-width: 256px;
-	width: 220px;
+	width: 180px;
 	display:flex;
 	flex-direction: column;
 	color: var(--colorLight);
-	background-color: var(--colorBlue);
 	margin: 8px;
+	margin-bottom: 16px;
+}
+
+.anime-title {
+	display: flex;
+	font-size: 14px;
+	padding: 4px;
+	padding-left: 0px;
+}
+
+.anime-title a {
+	margin-top: auto;
+	word-break: break-word;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--colorLight);
 }
 
 a:link {
@@ -213,94 +422,71 @@ a:hover {
   text-decoration: underline;
 }
 
-.anime-title {
-	font-size: 16px;
-	padding: 8px;
-	padding-bottom: 4px;
-	font-weight: bold;
-	color: var(--colorYellow);
-	word-break: break-word;
-	text-align: center;
-}
-
-
-.anime-info {
-	display: flex;
-	flex-direction: row;
-	font-size: 12px;
-}
-
-.anime-score {
-	flex-grow: 1;
-	padding: 4px 8px;
-	margin-left: auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	border-right: 1px solid var(--colorYellow);
-}
-
-.anime-episodes {
-	flex-grow: 1;
-	padding: 4px 8px;
-	margin-left: auto;
-	display: flex;
-	flex-direction: row;
-}
-
-.anime-episodes span.material-icons {
-	padding-right: 0;
-}
-
-
-.anime-genres {
-	font-size: 11px;
-	padding: 4px;
-	padding-bottom: 8px;
-	word-break: break-word;
-	text-align: center;
-}
-
 .anime-img-container {
-	min-height: 200px;
+	min-height: 240px;
 	flex-grow: 1;
-	background-color: var(--colorGray);
+	background-color: var(--colorLight);
 	background-position: center top;
 	background-size: cover;
 }
 
-.anime-platform {
-	font-size: 14px;
-	padding: 8px;
-	color: var(--colorYellow);
+.anime-brief {
 	display: flex;
 	flex-direction: row;
-	align-content: center;
-	justify-content: center;
-}
-
-.anime-platform span.material-icons {
-	padding-right: 8px;
-}
-
-.anime-comments {
 	font-size: 12px;
-	margin-top: -4px;
+	margin-top: 8px;
+}
+
+.platform-icon {
+	flex-grow: 1;
+	display: flex;
+	justify-content: end;
+	padding-right: 8px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.platform-icon > a {
+	border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    padding: 2px;
+	font-size: 14px;
+    background: var(--colorLight);
+    color: var(--colorCrimson);
+    text-align: center;
+}
+
+.anime-score {
 	padding: 4px;
-	padding-top: 0;
-	text-align: center;
+	border-left: 1px solid var(--colorCrimson);
+	border-right: 1px solid var(--colorCrimson);
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.anime-episodes {
+	padding-left: 8px;
+	flex-grow: 1;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
 .footer {
 	padding: 16px;
-	background-color: var(--colorRed);
-	color: var(--colorWhite);
+	background-color: var(--colorCrimson);
+	color: var(--colorLight);
+}
+
+.footer a {
+	color: var(--colorGreen);
 }
 
 .footer p {
 	margin: auto;
 	text-align: center;
 }
+
 /* Spinner */
 #spinner{
 	height: 100vh;
@@ -340,4 +526,3 @@ a:hover {
 	  transform: rotate(360deg);
 	}
   }
-  

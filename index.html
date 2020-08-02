@@ -8,41 +8,73 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
 <link rel="stylesheet" href="styles.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script type="text/javascript" src="anime_data_var.js"></script>
 <script type="text/javascript" src="script.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-174251703-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-174251703-1');
+</script>
+
 <title>AnistreamIN | Legally Streamable Anime in India</title>
 </head>
-<div id="spinner"><div class="ring"></div></div>
 <body onload="populateInit()">
+<div id="spinner"><div class="ring"></div></div>
 
 <div class = "header">
-	<div data-aos="fade-up" class = "head-content">
-		<h1><span>ANISTREAM</span><span class="india">IN</span></h1>
-		<p>The list of all legally streamable anime in India</p>
+	<div class = "head-content">
+		<div class="title"><span>ANISTREAM</span><span class="india">IN</span></div><div class="subtitle">Catalogue of Legally Streamable Anime in India</div>
 	</div>
 </div>
 
 <div class = "container">
-	<div data-aos="fade-up" class = "search-bar">
-		<span class="material-icons">search</span>
-		<input type="text" name="search" onkeyup="searchText()" placeholder="Search for Anime title, Genre or Streaming service...">
-		<div class = "sort-dropdown">
-			<span class="material-icons">sort</span>
-			<span class="value"><text>Score (High - Low)</text>
-			<div class="dropdown">
+	<div class = "action bar">
+		<div class = "search-bar">
+			<div class="search-container">
+				<span class="material-icons">search</span>
+				<input type="text" name="search" onkeyup="timer = setTimeout(searchText,1000)" onkeydown = "clearTimeout(timer)" placeholder="Search for Anime title, Genre or Streaming service...">
+			</div>
+			<div class = "sort-dropdown">
+				<div class="labels sort-menu">
+					<span class="material-icons">sort</span>
+					<span class="value">Score (High - Low)</span>
+				</div>
+				<div class="dropdown">
 					<button onclick="clickAlphAZ()">Title (A - Z)</button>
 					<button onclick="clickAlphZA()">Title (Z - A)</button>
 					<button onclick="clickScoreHL()">Score (High - Low)</button>
 					<button onclick="clickScoreLH()">Score (Low - High)</button>
 					<button onclick="clickDateNO()">Updated (New - Old)</button>
 					<button onclick="clickDateON()">Updated (Old - New)</button>
-					<button onclick="clickFree()">Free to Watch</button>
+				</div>
 			</div>
-			</span>
+			<div class = "sort-dropdown">
+				<div class="labels filter-platform">
+					<span class="material-icons">filter_list</span>
+					<span class="value">Platform</span>
+				</div>
+				<div class="dropdown">
+					<label class="checkbox-container">Select All<input type="checkbox" id="Select All" onclick="updateSelect()" checked><span class="checkmark"></span></label>
+					<label class="checkbox-container">Ani-One<input type="checkbox" id="Ani-One" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">CONtv<input type="checkbox" id="CONtv" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">Crunchyroll<input type="checkbox" id="Crunchyroll" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">GundamInfo<input type="checkbox" id="GundamInfo" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">Muse Asia<input type="checkbox" id="Muse Asia" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">Netflix<input type="checkbox" id="Netflix" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">Prime Video<input type="checkbox" id="Prime Video" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">Youtube<input type="checkbox" id="Youtube" onclick="filterData()"><span class="checkmark"></span></label>
+					<label class="checkbox-container">tubiTV<input type="checkbox" id="tubiTV" onclick="filterData()"><span class="checkmark"></span></label>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div  data-aos="fade-up" class="results">
+		<div class = "action-bottom">
+			<div class="results"></div>
+			<button class = "labels" onclick="clickFree()">View Free</button>
+		</div>
 	</div>
 	<div class = "anime-container">
 	</div>
@@ -50,11 +82,9 @@
 
 <div class = "footer">
 	<p style="margin-bottom: 16px">Drop a message on <a href="https://github.com/SAM10795/AnistreamIN/issues">https://github.com/SAM10795/AnistreamIN/issues</a> for any issues with the list or for general suggestions</p>
-	<p style="font-size:12px;">AOS library - Copyright (c) 2015 Michał Sajnóg</p>
 	<p style="font-size:12px;">Google Material Icons used for icons</p>
-	<p style="font-size:12px;">Cover art from ComicSense</p>
 	<p style="font-size:12px;">Anime data from MAL</p>
-	<p style="margin-top: 16px; font-size: 12px; color: var(--colorRed);">Updated: 7 June 2020</p>
+	<p style="margin-top: 16px; font-size: 12px; color: var(--colorRed);">Updated: 2 August 2020</p>
 </div>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
