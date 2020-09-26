@@ -551,8 +551,7 @@ function filterPF(animeObject)
 
 function filterFree(animeObject)
 {
-	console.log(Number(this))
-	return (animeObject[PLATFORM_PAID].includes(Number(this)));
+	return (animeObject[PLATFORM_PAID].includes(Number(this))||animeObject[PLATFORM_PAID].includes(String(this)));
 }
 
 function clickFree()
