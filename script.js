@@ -13,6 +13,7 @@ MAL_ID = "id"
 MAL_URL = "url"
 
 var ascending = false;
+var toggleCard = !('ontouchstart' in document.documentElement);
 
 FULL_STAR = "star ";
 HALF_STAR = "star_half ";
@@ -23,6 +24,7 @@ HALF_STAR = "star_half ";
 var sortMethod = 1;
 var platformData = data;
 var displayData = platformData;
+
 //select all = 1
 //indeterminate = 0
 //none selected = -1
@@ -209,14 +211,14 @@ function getStar(score)
 
 */
 
-function makeanimeobject(animeData)
+function makeanimeobjectcard(animeData)
 {
 	var animeObject = document.createElement("div");
-	animeObject.classList.add("anime-object");
+	animeObject.classList.add("anime-object","card");
 	animeObject.setAttribute('data-aos',"fade-up");
 	
 	var animeTitle = document.createElement("div");
-	animeTitle.classList.add("anime-title");
+	animeTitle.classList.add("anime-title","card");
 	animeTitle.title = animeData[ANIME_TITLE];
 	
 	var animeTitleContent = document.createElement("a");
@@ -227,29 +229,44 @@ function makeanimeobject(animeData)
 	animeObject.appendChild(animeTitle);
 	
 	var animeImgcontainer = document.createElement("div");
-	animeImgcontainer.setAttribute('class','anime-img-container');
+	animeImgcontainer.classList.add('anime-img-container',"card");
 	animeImgcontainer.style.backgroundImage = "url(\'"+animeData[IMAGE_URL]+"\')";
 	animeImgcontainer.title = "Anime Cover Image";
 	
 	animeObject.appendChild(animeImgcontainer);
 	
 	var animeBrief = document.createElement("div");
-	animeBrief.classList.add("anime-brief");
+	animeBrief.classList.add("anime-brief","card");
+
+	var platforms = animeData[PLATFORM].length;
+	var animePlatformTop = document.createElement("span");
+	animePlatformTop.classList.add('platform-top',"card");
+	for(i=0;i<platforms;i++)
+	{	
+		var animePlatform = document.createElement("span");
+		animePlatform.classList.add('platform-icon',"card");
+		if(animeData[PLATFORM_PAID]) 
+		{
+			animePlatform.title = "[PAID] " + animeData[PLATFORM][i] + ":" 
+			+ animeData[EPISODES][i] + "Eps";
+		}
+		else
+		{	animePlatform.title = "[FREE] " + animeData[PLATFORM][i] + ":" 
+			+ animeData[EPISODES][i] + "Eps";
+		}
 	
-	var animePlatform = document.createElement("span");
-	animePlatform.classList.add('platform-icon');
-	animePlatform.title = "Streaming Platform";
+		var animePlatformLink = document.createElement("a");
+		animePlatformLink.href = animeData[PLATFORM_URL][i];
+		animePlatformLink.id = animeData[PLATFORM][i].split(" ").join("");
+		animePlatformLink.textContent = animeData[PLATFORM][i][0];
 	
-	var animePlatformLink = document.createElement("a");
-	animePlatformLink.href = animeData[PLATFORM_URL];
-	animePlatformLink.id = animeData[PLATFORM].split(" ").join("");
-	animePlatformLink.textContent = animeData[PLATFORM][0];
-	
-	animePlatform.appendChild(animePlatformLink);
-	animeBrief.appendChild(animePlatform);
+		animePlatform.appendChild(animePlatformLink);
+		animePlatformTop.appendChild(animePlatform);
+	}
+	animeBrief.appendChild(animePlatformTop);
 	
 	var animeScore = document.createElement("span");
-	animeScore.classList.add('anime-score');
+	animeScore.classList.add('anime-score',"card");
 	animeScore.title = "MAL Rating";
 	animeScore.title = animeData[ANIME_SCORE];
 	animeScore.textContent = animeData[ANIME_SCORE];
@@ -262,6 +279,8 @@ function makeanimeobject(animeData)
 	animeScore.appendChild(animeScoreIcon);
 	animeBrief.appendChild(animeScore);
 	
+	animeObject.appendChild(animeBrief);
+	/*
 	var animeEpisodes = document.createElement("span");
 	animeEpisodes.classList.add('anime-episodes');
 	animeEpisodes.title = "Episodes available";
@@ -272,20 +291,151 @@ function makeanimeobject(animeData)
 	animeEpisodesIcon.textContent = "playlist_play";
 	
 	var animeEpisodesVal = document.createElement("span");
-	animeEpisodesVal.textContent = animeData[EPISODES];
+	animeEpisodesVal.textContent = animeData[EPISODES][0];
 	
 	animeEpisodes.appendChild(animeEpisodesIcon);
 	animeEpisodes.appendChild(animeEpisodesVal);
 	animeBrief.appendChild(animeEpisodes);
+	*/
 	
-	animeObject.appendChild(animeBrief);
-		
 	return animeObject;	
+}
+
+function makeanimeobjectlist(animeData)
+{
+	var animeObject = document.createElement("div");
+	animeObject.classList.add("anime-object","list");
+	animeObject.setAttribute('data-aos',"fade-up");
+	
+	var animeImgcontainer = document.createElement("div");
+	animeImgcontainer.classList.add('anime-img-container',"list");
+	animeImgcontainer.style.backgroundImage = "url(\'"+animeData[IMAGE_URL]+"\')";
+	animeImgcontainer.title = "Anime Cover Image";
+	
+	animeObject.appendChild(animeImgcontainer);
+	
+	var animeBrief = document.createElement("div");
+	animeBrief.classList.add("anime-brief","list");
+	
+	var animeHeader = document.createElement("div");
+	animeHeader.classList.add("anime-header","list");
+
+	var animeTitle = document.createElement("div");
+	animeTitle.classList.add("anime-title","list");
+	animeTitle.title = animeData[ANIME_TITLE];
+	
+	var animeTitleContent = document.createElement("a");
+	animeTitleContent.textContent = animeData[ANIME_TITLE];
+	animeTitleContent.href = animeData[MAL_URL];
+	animeTitle.appendChild(animeTitleContent);
+	
+	animeHeader.appendChild(animeTitle);
+	
+	var animeScore = document.createElement("span");
+	animeScore.classList.add('anime-score',"list");
+	animeScore.title = "MAL Rating";
+	animeScore.title = animeData[ANIME_SCORE];
+	animeScore.textContent = animeData[ANIME_SCORE];
+	
+	var animeScoreIcon = document.createElement("span");
+	animeScoreIcon.classList.add('material-icons');
+	animeScoreIcon.style.fontSize = "12px";
+	animeScoreIcon.textContent = "star";
+	
+	animeScore.appendChild(animeScoreIcon);
+	animeHeader.appendChild(animeScore);
+	
+	animeBrief.appendChild(animeHeader);
+	
+	var platforms = animeData[PLATFORM].length;
+	var animePlatformTop = document.createElement("div");
+	animePlatformTop.classList.add('platform-top',"list");
+	for(i=0;i<platforms;i++)
+	{	
+		var animePlatform = document.createElement("span");
+		animePlatform.classList.add('platform-icon',"list");
+	
+		var animePlatformLink = document.createElement("a");
+		animePlatformLink.classList.add("list");
+		animePlatformLink.href = animeData[PLATFORM_URL][i];
+		animePlatformLink.id = animeData[PLATFORM][i].split(" ").join("");
+		animePlatformLink.textContent = animeData[PLATFORM][i] + " | " + 
+		animeData[EPISODES][i] + " Eps";
+	
+		animePlatform.appendChild(animePlatformLink);
+		animePlatformTop.appendChild(animePlatform);
+	}
+	animeBrief.appendChild(animePlatformTop);
+	animeObject.appendChild(animeBrief);
+	
+	/*
+	var animeEpisodes = document.createElement("span");
+	animeEpisodes.classList.add('anime-episodes');
+	animeEpisodes.title = "Episodes available";
+	
+	var animeEpisodesIcon = document.createElement("span");
+	animeEpisodesIcon.classList.add('material-icons');
+	animeEpisodesIcon.style.fontSize = "12px";
+	animeEpisodesIcon.textContent = "playlist_play";
+	
+	var animeEpisodesVal = document.createElement("span");
+	animeEpisodesVal.textContent = animeData[EPISODES][0];
+	
+	animeEpisodes.appendChild(animeEpisodesIcon);
+	animeEpisodes.appendChild(animeEpisodesVal);
+	animeBrief.appendChild(animeEpisodes);
+	*/
+	
+	return animeObject;	
+}
+
+function makeanimeobject(animeData)
+{
+	if(toggleCard)
+	{
+		return makeanimeobjectcard(animeData);
+	}	
+	else
+	{
+		return makeanimeobjectlist(animeData);
+	}
+}
+
+function clickList()
+{
+	toggleCard = false;
+	updateLayout(true);
+}
+
+function clickCard()
+{
+	toggleCard = true;
+	updateLayout(true);
+}
+
+function updateLayout(update)
+{
+	var layouts = document.querySelectorAll(".viewer");
+	if(toggleCard)
+	{
+		layouts[1].classList.add("clicked");
+		layouts[0].classList.remove("clicked");
+	}
+	else
+	{
+		layouts[0].classList.add("clicked");
+		layouts[1].classList.remove("clicked");
+	}
+	if(update)
+	{
+		updateContainer();
+	}
 }
 
 function populateInit()
 {
 	document.querySelector("div.search-bar input").value = "";
+	updateLayout(false);
 	updateSelect();
 }
 
@@ -341,15 +491,15 @@ function updateContainer()
 		container.appendChild(documentFragment);
 	}
 	
-	if(searchText.value)
+	if(search.value)
 	{
 		if(platformChecked == 0)
 		{
-			results.innerHTML = displayData.length + " entries for "+ searchText.value + " in "+getCheckedPlatforms();
+			results.innerHTML = displayData.length + " entries for "+ search.value + " in "+getCheckedPlatforms();
 		}
 		else
 		{
-			results.innerHTML = displayData.length + "entries for "+ searchText.value;
+			results.innerHTML = displayData.length + "entries for "+ search.value;
 		}
 	}
 	else
@@ -388,20 +538,21 @@ function includesNoCase(substr,arr)
 function filterText(animeObject)
 {
 	let title = animeObject[ANIME_TITLE].toLowerCase();
-	let platform = animeObject[PLATFORM].toLowerCase();
+	var platforms = animeObject[PLATFORM].map(v => v.toLowerCase());
 	return title.includes(this.toLowerCase()) || includesNoCase(this.toLowerCase(),animeObject[ANIME_TITLE_ALT]) 
-		|| includesNoCase(this.toLowerCase(),animeObject[GENRES]) || platform.includes(this.toLowerCase());
+		|| includesNoCase(this.toLowerCase(),animeObject[GENRES]) || platforms.includes(this.toLowerCase());
 }
 
 function filterPF(animeObject)
 {
-	let platform = animeObject[PLATFORM].toLowerCase();
-	return platform.includes(this.toLowerCase());
+	var platforms = animeObject[PLATFORM].map(v => v.toLowerCase());
+	return platforms.includes(this.toLowerCase())
 }
 
 function filterFree(animeObject)
 {
-	return (animeObject[PLATFORM_PAID] == this);
+	console.log(Number(this))
+	return (animeObject[PLATFORM_PAID].includes(Number(this)));
 }
 
 function clickFree()

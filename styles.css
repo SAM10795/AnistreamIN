@@ -162,6 +162,19 @@ input[type=text] {
 	padding: 8px;
 }
 
+.viewer {
+	display: flex;
+	border: 1px solid var(--colorCrimson);
+	color: var(--colorLight);
+	background-color: var(--colorDark);
+	padding: 8px;
+}
+
+.viewer.clicked {
+	color: var(--colorLight);
+	background-color: var(--colorCrimson);
+}
+
 .sort-menu {
 }
 
@@ -407,7 +420,7 @@ button.labels {
 	justify-content: center;
 }
 
-.anime-object {
+.anime-object.card {
 	max-width: 256px;
 	width: 180px;
 	display:flex;
@@ -417,14 +430,14 @@ button.labels {
 	margin-bottom: 16px;
 }
 
-.anime-title {
+.anime-title.card {
 	display: flex;
 	font-size: 14px;
 	padding: 4px;
 	padding-left: 0px;
 }
 
-.anime-title a {
+.anime-title.card a {
 	margin-top: auto;
 	word-break: break-word;
 	white-space: nowrap;
@@ -441,7 +454,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.anime-img-container {
+.anime-img-container.card {
 	min-height: 240px;
 	flex-grow: 1;
 	background-color: var(--colorLight);
@@ -449,23 +462,27 @@ a:hover {
 	background-size: cover;
 }
 
-.anime-brief {
+.anime-brief.card {
 	display: flex;
 	flex-direction: row;
 	font-size: 12px;
 	margin-top: 8px;
 }
 
-.platform-icon {
-	flex-grow: 1;
+.platform-top.card {
 	display: flex;
+	flex-grow: 1;
 	justify-content: end;
+}
+
+.platform-icon.card {
+	display: flex;
 	padding-right: 8px;
 	margin-top: auto;
 	margin-bottom: auto;
 }
 
-.platform-icon > a {
+.platform-icon.card > a {
 	border-radius: 50%;
     width: 16px;
     height: 16px;
@@ -519,20 +536,144 @@ a#tubiTV {
 	color: #ff8c00;
 }
 
-.anime-score {
+.anime-score.card {
 	padding: 4px;
 	border-left: 1px solid var(--colorCrimson);
-	border-right: 1px solid var(--colorCrimson);
 	margin-top: auto;
 	margin-bottom: auto;
+	flex-grow: 1;
 }
 
-.anime-episodes {
+.anime-episodes.card {
 	padding-left: 8px;
 	flex-grow: 1;
 	margin-top: auto;
 	margin-bottom: auto;
 }
+
+/*List layout*/
+.anime-object.list {
+	display:flex;
+	flex-direction: row;
+	width: 310px;
+	max-width: 310px;
+	color: var(--colorLight);
+	margin: 4px;
+	margin-bottom: 16px;
+	padding: 4px;
+	border: 1px solid var(--colorCrimson);
+}
+
+.anime-img-container.list {
+	min-height: 80px;
+	min-width: 80px;
+	background-color: var(--colorLight);
+	background-position: center top;
+	background-size: cover;
+}
+
+.anime-brief.list {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	font-size: 12px;
+	margin-left: 8px;
+}
+
+.anime-header.list {
+	display: flex;
+	flex-direction: row;
+	border-bottom: 1px solid var(--colorCrimson)
+}
+
+.anime-title.list {
+	font-size: 14px;
+	padding: 4px;
+	padding-left: 0px;
+	max-width: 168px;
+}
+
+.anime-title.list a {
+	display: block;
+	margin-top: auto;
+	word-break: break-word;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--colorLight);
+}
+
+.anime-score.list {
+	padding: 4px;
+	margin-left: auto;	
+	display: inherit;
+}
+
+.platform-top.list {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+.platform-icon.list {
+	display: flex;
+	padding-right: 8px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.platform-icon.list > a {
+    padding: 2px;
+	font-size: 14px;
+    color: var(--colorCrimson);
+    text-align: center;
+    border: 1px solid var(--colorCrimson);
+}
+
+a.list#Ani-One {
+	border-color: #fff;
+	color: #fff;
+    background-color: var(--colorDark);
+}
+
+a.list#CONtv {
+	border-color: #fff;
+    background-color: var(--colorDark);
+}
+
+a.list#Crunchyroll {
+	border-color: #DF6300;
+    background-color: var(--colorDark);
+}
+
+a.list#GundamInfo {
+	border-color: #ff0;
+    background-color: var(--colorDark);
+}
+
+a.list#MuseAsia {
+	border-color: #F7941D;	
+	color: #F7941D;
+    background-color: var(--colorDark);
+}
+
+a.list#Netflix {
+	border-color: #F00;
+    background-color: var(--colorDark);	
+}
+a.list#PrimeVideo {
+	border-color: #fff;	
+    background-color: var(--colorDark);
+}
+a.list#Youtube {
+	border-color: #F00;	
+    background-color: var(--colorDark);
+}
+a.list#tubiTV {
+	border-color: #ff8c00;
+    background-color: var(--colorDark);
+}
+
 
 .footer {
 	padding: 16px;
