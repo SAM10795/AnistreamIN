@@ -524,11 +524,13 @@ function includesNoCase(substr,arr)
 	var retVal = false;
 	var i=0;
 	var array_el;
-	for(i=0;i<arr.length;i++)
+	strarr = arr.substr(1,arr.length-2);
+	strarr = strarr.split(",");
+	for(i=0;i<strarr.length;i++)
 	{
-		if(arr[i])
+		if(strarr[i])
 		{
-			array_el = arr[i].toLowerCase();
+			array_el = strarr[i].toLowerCase();
 			retVal = retVal || array_el.includes(substr);
 		}
 	}
