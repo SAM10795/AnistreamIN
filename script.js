@@ -499,7 +499,7 @@ function updateContainer()
 		}
 		else
 		{
-			results.innerHTML = displayData.length + "entries for "+ search.value;
+			results.innerHTML = displayData.length + " entries for "+ search.value;
 		}
 	}
 	else
