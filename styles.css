@@ -536,6 +536,11 @@ a#tubiTV {
 	color: #ff8c00;
 }
 
+a#anilog {
+	background: #3BB9FF;
+	color: #FFF;
+}
+
 .anime-score.card {
 	padding: 4px;
 	border-left: 1px solid var(--colorCrimson);
@@ -672,6 +677,11 @@ a.list#Youtube {
 a.list#tubiTV {
 	border-color: #ff8c00;
     background-color: var(--colorDark);
+}
+a.list#anilog {
+	border-color: #3BB9FF;
+	color: #3BB9FF;
+    	background-color: var(--colorDark);
 }
 
 

@@ -247,11 +247,11 @@ function makeanimeobjectcard(animeData)
 		animePlatform.classList.add('platform-icon',"card");
 		if(animeData[PLATFORM_PAID]) 
 		{
-			animePlatform.title = "[PAID] " + animeData[PLATFORM][i] + ":" 
+			animePlatform.title = animeData[PLATFORM][i] + ":" 
 			+ animeData[EPISODES][i] + "Eps";
 		}
 		else
-		{	animePlatform.title = "[FREE] " + animeData[PLATFORM][i] + ":" 
+		{	animePlatform.title = animeData[PLATFORM][i] + ":" 
 			+ animeData[EPISODES][i] + "Eps";
 		}
 	
