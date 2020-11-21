@@ -541,6 +541,16 @@ a#anilog {
 	color: #FFF;
 }
 
+a#JFF {
+	background: #FFF;
+	color: #000;
+}
+
+a#WeTV {
+	background: #FFF;
+	color: #3BB9FF;
+}
+
 .anime-score.card {
 	padding: 4px;
 	border-left: 1px solid var(--colorCrimson);
@@ -682,6 +692,16 @@ a.list#anilog {
 	border-color: #3BB9FF;
 	color: #3BB9FF;
     	background-color: var(--colorDark);
+}
+a.list#JFF {
+	border-color: #FFF;
+	color: #FFF;
+    	background-color: #000;
+}
+a.list#WeTV {
+	border-color: #FFF;
+	color: #FFF;
+    	background-color: #3BB9FF;
 }
 
 
