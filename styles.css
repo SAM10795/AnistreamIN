@@ -75,6 +75,11 @@ div.subtitle {
 		padding-left: 16px;
 		padding-right: 16px;
 	}
+	.info-bar {
+		flex-direction: column;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
 	div.title {
 		margin-left: auto;
 		margin-right: auto;
@@ -95,6 +100,19 @@ div.subtitle {
 	color: var(--colorGreen);
 }
 
+.info-bar {
+	background-color: var(--colorDark);
+	margin-top: 16px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 16px;
+	justify-content: center;
+}
+
+.info-bar a {
+	color: var(--colorGreen);
+}
+
 .container {
 	background-color: var(--colorDark);
 	display: flex;
@@ -106,7 +124,7 @@ div.subtitle {
 
 .search-bar {
 	min-width: 360px;
-	margin-top: 32px;
+	margin-top: 16px;
 	margin-left: 96px;
 	margin-right: 96px;
 	display: flex;
