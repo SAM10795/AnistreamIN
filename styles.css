@@ -569,6 +569,11 @@ a#WeTV {
 	color: #3BB9FF;
 }
 
+a#NHK {
+	background: #FFF;
+	color: #DD0005;
+}
+
 .anime-score.card {
 	padding: 4px;
 	border-left: 1px solid var(--colorCrimson);
@@ -721,7 +726,11 @@ a.list#WeTV {
 	color: #FFF;
     	background-color: #3BB9FF;
 }
-
+a.list#NHK {
+	color: #FFF;
+	border-color: #DD0005;
+    	background-color: var(--colorDark);
+}
 
 .footer {
 	padding: 16px;

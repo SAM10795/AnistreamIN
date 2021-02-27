@@ -21,7 +21,7 @@ HALF_STAR = "star_half ";
 //alphabetical = 0
 //score = 1
 //date = 2
-var sortMethod = 1;
+var sortMethod = 2;
 var platformData = data;
 var displayData = platformData;
 
