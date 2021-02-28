@@ -564,12 +564,15 @@ function filterMovies(animeObject)
 
 function clickMovies()
 {
+	var toggleMovies = document.querySelector("button.labels.movie");
 	if(movies)
 	{
+		toggleMovies.style.backgroundColor = "unset";
 		movies = 0;
 	}
 	else
 	{
+		toggleMovies.style.backgroundColor = "var(--colorCrimson)";
 		movies = 1;
 	}
 	searchText();
@@ -580,12 +583,12 @@ function clickFree()
 	var toggleFree = document.querySelector("button.labels.free");
 	if(free)
 	{
-		toggleFree.innerHTML = "View Free";
+		toggleFree.style.backgroundColor = "unset";
 		free = 0;
 	}
 	else
 	{
-		toggleFree.innerHTML = "View All";
+		toggleFree.style.backgroundColor = "var(--colorCrimson)";
 		free = 1;
 	}
 	searchText();
