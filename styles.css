@@ -346,6 +346,7 @@ button:hover {
 
 .results {
 	padding-left: 24px;
+	padding-right: 8px;
 	color: var(--colorLight);
 	flex-grow: 1;
 	margin-top: auto;
@@ -354,7 +355,7 @@ button:hover {
 }
 
 button.labels {
-	width: 100px;
+	width: 144px;
 	display: block;
 	text-align: center;
 }
