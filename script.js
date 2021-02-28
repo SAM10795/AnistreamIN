@@ -30,6 +30,7 @@ var displayData = platformData;
 //none selected = -1
 var platformChecked = 1;
 var free = 0;
+var movies = 0;
 
 function clickAlphAZ()
 {
@@ -556,9 +557,27 @@ function filterFree(animeObject)
 	return (animeObject[PLATFORM_PAID].includes(Number(this))||animeObject[PLATFORM_PAID].includes(String(this)));
 }
 
+function filterMovies(animeObject)
+{
+	return animeObject[EPISODES].find(e=>e == "1") ;
+}
+
+function clickMovies()
+{
+	if(movies)
+	{
+		movies = 0;
+	}
+	else
+	{
+		movies = 1;
+	}
+	searchText();
+}
+
 function clickFree()
 {
-	var toggleFree = document.querySelector("button.labels");
+	var toggleFree = document.querySelector("button.labels.free");
 	if(free)
 	{
 		toggleFree.innerHTML = "View Free";
@@ -643,6 +662,10 @@ function searchText()
 	if(free)
 	{
 		displayData = displayData.filter(filterFree,0);
+	}
+	if(movies)
+	{
+		displayData = displayData.filter(filterMovies,0);
 	}
 	updateContainer();
 }
