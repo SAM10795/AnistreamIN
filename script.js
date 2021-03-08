@@ -1,16 +1,20 @@
-IMAGE_URL = "img_url";
-ANIME_TITLE = "title";
-ANIME_TITLE_ALT = "title_alt";
-ANIME_SCORE = "score";
-EPISODES = "eps";
-PLATFORM = "platform";
-COMMENTS = "comments";
-GENRES = "genres";
-UPDATED = "updated";
+IMAGE_URL = "img_url"
+ANIME_TITLE = "title"
+ANIME_TITLE_ALT = "title_alt"
+ANIME_SCORE_MAL = "score_mal"
+ANIME_SCORE_ANILIST = "score_anilist"
+EPISODES = "eps"
+PLATFORM = "platform"
 PLATFORM_URL = "platform_url"
 PLATFORM_PAID = "platform_paid"
-MAL_ID = "id"
-MAL_URL = "url"
+COMMENTS = "comments"
+GENRES = "genres"
+UPDATED = "updated"
+MAL_ID = "id_mal"
+ANILIST_ID = "id_anilist"
+SHEET_EPISODES = "episodes"
+MAL_URL = "url_mal"
+ANILIST_URL = "url_anilist"
 
 var ascending = false;
 var toggleCard = !('ontouchstart' in document.documentElement);
@@ -30,6 +34,7 @@ var displayData = platformData;
 //none selected = -1
 var platformChecked = 1;
 var free = 0;
+var MAL = 1;
 var movies = 0;
 
 function clickAlphAZ()
@@ -86,15 +91,27 @@ function clickDateNO()
 	updateContainer();
 }
 
-function sortScore(a,b)
+function sortScoreMal(a,b)
 {
 	if(ascending)
 	{
-		return a[ANIME_SCORE] - b[ANIME_SCORE];
+		return a[ANIME_SCORE_MAL] - b[ANIME_SCORE_MAL];
 	}
 	else
 	{
-		return b[ANIME_SCORE] - a[ANIME_SCORE];
+		return b[ANIME_SCORE_MAL] - a[ANIME_SCORE_MAL];
+	}
+}
+
+function sortScoreAnilist(a,b)
+{
+	if(ascending)
+	{
+		return a[ANIME_SCORE_ANILIST] - b[ANIME_SCORE_ANILIST];
+	}
+	else
+	{
+		return b[ANIME_SCORE_ANILIST] - a[ANIME_SCORE_ANILIST];
 	}
 }
 
@@ -224,7 +241,14 @@ function makeanimeobjectcard(animeData)
 	
 	var animeTitleContent = document.createElement("a");
 	animeTitleContent.textContent = animeData[ANIME_TITLE];
-	animeTitleContent.href = animeData[MAL_URL];
+	if(MAL)
+	{
+		animeTitleContent.href = animeData[MAL_URL];
+	}
+	else
+	{
+		animeTitleContent.href = animeData[ANILIST_URL];
+	}
 	
 	animeTitle.appendChild(animeTitleContent);
 	animeObject.appendChild(animeTitle);
@@ -268,9 +292,18 @@ function makeanimeobjectcard(animeData)
 	
 	var animeScore = document.createElement("span");
 	animeScore.classList.add('anime-score',"card");
-	animeScore.title = "MAL Rating";
-	animeScore.title = animeData[ANIME_SCORE];
-	animeScore.textContent = animeData[ANIME_SCORE];
+	if(MAL)
+	{
+		animeScore.title = "MAL Rating";
+		animeScore.title = animeData[ANIME_SCORE_MAL];
+		animeScore.textContent = animeData[ANIME_SCORE_MAL];
+	}
+	else
+	{
+		animeScore.title = "Anilist Rating";
+		animeScore.title = animeData[ANIME_SCORE_ANILIST];
+		animeScore.textContent = animeData[ANIME_SCORE_ANILIST];
+	}
 	
 	var animeScoreIcon = document.createElement("span");
 	animeScoreIcon.classList.add('material-icons');
@@ -327,16 +360,32 @@ function makeanimeobjectlist(animeData)
 	
 	var animeTitleContent = document.createElement("a");
 	animeTitleContent.textContent = animeData[ANIME_TITLE];
-	animeTitleContent.href = animeData[MAL_URL];
+	if(MAL)
+	{
+		animeTitleContent.href = animeData[MAL_URL];
+	}
+	else
+	{
+		animeTitleContent.href = animeData[ANILIST_URL];
+	}
 	animeTitle.appendChild(animeTitleContent);
 	
 	animeHeader.appendChild(animeTitle);
 	
 	var animeScore = document.createElement("span");
 	animeScore.classList.add('anime-score',"list");
-	animeScore.title = "MAL Rating";
-	animeScore.title = animeData[ANIME_SCORE];
-	animeScore.textContent = animeData[ANIME_SCORE];
+	if(MAL)
+	{
+		animeScore.title = "MAL Rating";
+		animeScore.title = animeData[ANIME_SCORE_MAL];
+		animeScore.textContent = animeData[ANIME_SCORE_MAL];
+	}
+	else
+	{
+		animeScore.title = "Anilist Rating";
+		animeScore.title = animeData[ANIME_SCORE_ANILIST];
+		animeScore.textContent = animeData[ANIME_SCORE_ANILIST];
+	}
 	
 	var animeScoreIcon = document.createElement("span");
 	animeScoreIcon.classList.add('material-icons');
@@ -471,7 +520,14 @@ function updateContainer()
 		}
 		case 1:
 		{
-			displayData.sort(sortScore);
+			if(MAL)
+			{
+				displayData.sort(sortScoreMal);
+			}
+			else
+			{
+				displayData.sort(sortScoreAnilist);
+			}
 			break;
 		}
 		case 2:
@@ -492,7 +548,7 @@ function updateContainer()
 		container.appendChild(documentFragment);
 	}
 	
-	if(search.value)
+	if(search.value.length >= 3)
 	{
 		if(platformChecked == 0)
 		{
@@ -564,7 +620,7 @@ function filterMovies(animeObject)
 
 function clickMovies()
 {
-	var toggleMovies = document.querySelector("button.labels.movie");
+	var toggleMovies = document.querySelector("button.movie");
 	if(movies)
 	{
 		toggleMovies.style.backgroundColor = "unset";
@@ -574,6 +630,22 @@ function clickMovies()
 	{
 		toggleMovies.style.backgroundColor = "var(--colorCrimson)";
 		movies = 1;
+	}
+	searchText();
+}
+
+function clickAnimeList()
+{
+	var animelist = document.querySelector("button.animelist");
+	if(MAL)
+	{
+		animelist.innerHTML = "Switch to MAL"
+		MAL = 0;
+	}
+	else
+	{
+		animelist.innerHTML = "Switch to Anilist"
+		MAL = 1;
 	}
 	searchText();
 }
@@ -660,7 +732,7 @@ function searchText()
 	}
 	else
 	{
-		displayData = platformData.sort(sortScore);
+		displayData = platformData.sort(sortDate);
 	}
 	if(free)
 	{

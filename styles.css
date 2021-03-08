@@ -193,6 +193,14 @@ input[type=text] {
 	background-color: var(--colorCrimson);
 }
 
+button.movie {
+	display: flex;
+	border: 1px solid var(--colorCrimson);
+	color: var(--colorLight);
+	background-color: var(--colorDark);
+	padding: 8px;
+}
+
 .sort-menu {
 }
 
