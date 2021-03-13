@@ -49,6 +49,37 @@ div.subtitle {
 	font-variant: small-caps;
 }
 
+div.newfeature {
+	display: flex;
+	flex-direction: row;
+}
+
+.info-bar {
+	background-color: var(--colorDark);
+	margin-top: 16px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 16px;
+	justify-content: center;
+}
+
+.info-bar a {
+	color: var(--colorGreen);
+}
+
+input#animelistinput {
+	margin-left: 16px;
+}
+
+@media only screen and (max-width: 960px) {
+	input#animelistinput {
+		margin-left: 0;
+	}
+	div.newfeature {
+		flex-direction: column;
+	}
+}
+
 @media only screen and (max-width: 800px) {
 	.head-content {
 		flex-direction: column;
@@ -97,19 +128,6 @@ div.subtitle {
 }
 
 .india {
-	color: var(--colorGreen);
-}
-
-.info-bar {
-	background-color: var(--colorDark);
-	margin-top: 16px;
-	margin-left: auto;
-	margin-right: auto;
-	font-size: 16px;
-	justify-content: center;
-}
-
-.info-bar a {
 	color: var(--colorGreen);
 }
 

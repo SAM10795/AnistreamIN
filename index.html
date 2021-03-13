@@ -28,10 +28,14 @@
 	<div class = "head-content">
 		<div class="title"><span>ANISTREAM</span><span class="india">IN</span></div><div class="subtitle">Catalogue of Legally Streamable Anime in India</div>
 	</div>
-</div>
+</div>     
 
 <div class = "container">
 	<div class = "info-bar">Suggest missing titles, obsolete entries or general features <a href="https://forms.gle/DLh5LkzKZxYhgKeP8"><u>here</u></a></div>
+	<div class = "info-bar newfeature">
+		<label for="animelistinput">[Beta feature:] Upload your MAL animelist(XML format) to get entries on your PTW</label>
+		<input type="file" name="animelistinput" id="animelistinput" onchange="fileFunction(event)">
+	</div>
 	<div class = "action bar">
 		<div class = "search-bar">
 			<div class="search-container">
@@ -76,6 +80,7 @@
 		</div>
 		<div class = "action-bottom">
 			<div class="results"></div>
+			<button class = "labels plantowatch" onclick="clickPTW()" style="display: none">View PTW</button>
 			<button class = "labels free" onclick="clickFree()">View Free</button>
 			<button class = "labels animelist" onclick="clickAnimeList()">Switch to Anilist</button>
 			<button class = "material-icons movie" onclick="clickMovies()">movie</button>
@@ -91,7 +96,7 @@
 	<p style="margin-bottom: 16px">Drop a message on <a href="https://github.com/SAM10795/AnistreamIN/issues">https://github.com/SAM10795/AnistreamIN/issues</a> for any issues with the list or for general suggestions</p>
 	<p style="font-size:12px;">Google Material Icons used for icons</p>
 	<p style="font-size:12px;">Anime data from MAL</p>
-	<p style="margin-top: 16px; font-size: 12px; color: var(--colorRed);">Updated: 08 March 2021</p>
+	<p style="margin-top: 16px; font-size: 12px; color: var(--colorRed);">Updated: 13 March 2021</p>
 </div>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>

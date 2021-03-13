@@ -16,6 +16,10 @@ SHEET_EPISODES = "episodes"
 MAL_URL = "url_mal"
 ANILIST_URL = "url_anilist"
 
+SERIES_MAL_ID = "series_animedb_id"
+SERIES_MAL_STATUS = "my_status"
+PTW = "Plan to Watch"
+
 var ascending = false;
 var toggleCard = !('ontouchstart' in document.documentElement);
 
@@ -34,8 +38,58 @@ var displayData = platformData;
 //none selected = -1
 var platformChecked = 1;
 var free = 0;
+var plantowatch = 0;
 var MAL = 1;
 var movies = 0;
+
+var series_ids = [];
+
+function fileFunction(event)
+{
+	var fr=new FileReader(); 
+	fr.onload=function(){ 
+		if (window.DOMParser) {
+			// code for modern browsers
+			parser = new DOMParser();
+			xmlDoc = parser.parseFromString(fr.result,"text/xml");
+		} else {
+			// code for old IE browsers
+			xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+			xmlDoc.async = false;
+			xmlDoc.loadXML(fr.result);
+		}
+		var animes = xmlDoc.getElementsByTagName("anime");
+		series_ids = [];
+		var i=0;
+		if(animes.length <= 0)
+		{
+			window.alert("File invalid");
+		}
+		else
+		{
+			var toggleFree = document.querySelector("button.labels.plantowatch");
+			toggleFree.style.display = "block";
+			
+			for(i=0;i<animes.length;i++)
+			{
+				status = animes[i].getElementsByTagName(SERIES_MAL_STATUS)[0].childNodes[0].nodeValue;
+				series_id = animes[i].getElementsByTagName(SERIES_MAL_ID)[0].childNodes[0].nodeValue;
+				if(status == PTW)
+				{
+					series_ids.push(series_id);
+				}
+			}
+		}
+	}
+              
+        fr.readAsText(event.target.files[0]);         
+}
+
+function filterPTW(animeObject)
+{
+	let mal_id = animeObject[MAL_ID];
+	return series_ids.includes(mal_id);
+}
 
 function clickAlphAZ()
 {
@@ -485,7 +539,12 @@ function updateLayout(update)
 function populateInit()
 {
 	document.querySelector("div.search-bar input").value = "";
+	document.querySelector("input#animelistinput").value = "";
 	updateLayout(false);
+	if('ontouchstart' in document.documentElement)
+	{
+		document.querySelector("div.newfeature").style.display = "none";
+	}
 	updateSelect();
 }
 
@@ -666,6 +725,22 @@ function clickFree()
 	searchText();
 }
 
+function clickPTW()
+{
+	var toggleFree = document.querySelector("button.labels.plantowatch");
+	if(plantowatch)
+	{
+		toggleFree.style.backgroundColor = "unset";
+		plantowatch = 0;
+	}
+	else
+	{
+		toggleFree.style.backgroundColor = "var(--colorCrimson)";
+		plantowatch = 1;
+	}
+	searchText();
+}
+
 function filterData()
 {
 	var checkboxes = document.querySelectorAll(".dropdown .checkbox-container > input");
@@ -741,6 +816,10 @@ function searchText()
 	if(movies)
 	{
 		displayData = displayData.filter(filterMovies,0);
+	}
+	if(plantowatch)
+	{
+		displayData = displayData.filter(filterPTW);
 	}
 	updateContainer();
 }
