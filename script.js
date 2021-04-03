@@ -824,6 +824,10 @@ function searchText()
 	updateContainer();
 }
 
+function getUserMAL(username) {
+	var data;
+}
+
 function spinnerVisible(status) {
 	document.getElementById('spinner').style.display = status
 }
