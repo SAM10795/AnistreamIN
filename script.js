@@ -29,6 +29,7 @@ HALF_STAR = "star_half ";
 //alphabetical = 0
 //score = 1
 //date = 2
+//randomize = 3
 var sortMethod = 2;
 var platformData = data;
 var displayData = platformData;
@@ -144,6 +145,26 @@ function clickDateNO()
 	sortMethod = 2;
 	updateContainer();
 }
+
+function clickShuffle()
+{
+	var topText = document.querySelector(".value");
+	topText.textContent = "Randomize";
+	ascending = false;
+	sortMethod = 3;
+	updateContainer();
+}
+
+/* Randomize array in-place using Durstenfeld shuffle algorithm */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
 
 function sortScoreMal(a,b)
 {
@@ -593,6 +614,10 @@ function updateContainer()
 		{
 			displayData.sort(sortDate);
 			break;
+		}
+		case 3:
+		{
+			shuffleArray(displayData);
 		}
 		default:
 		{
