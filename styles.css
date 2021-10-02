@@ -606,6 +606,12 @@ a#NHK {
 	color: #DD0005;
 }
 
+a#JAFClassics {
+	background: #FFF;
+	color: #8B0000;
+}
+
+
 .anime-score.card {
 	padding: 4px;
 	border-left: 1px solid var(--colorCrimson);
@@ -761,6 +767,11 @@ a.list#WeTV {
 a.list#NHK {
 	color: #FFF;
 	border-color: #DD0005;
+    	background-color: var(--colorDark);
+}
+a.list#JAFClassics {
+	color: #FFF;
+	border-color: #8B0000;
     	background-color: var(--colorDark);
 }
 
