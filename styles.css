@@ -610,6 +610,10 @@ a#JAFClassics {
 	background: #FFF;
 	color: #8B0000;
 }
+a#Hotstar {
+	background: #1f80e0;
+	color: #132d60;
+}
 
 
 .anime-score.card {
@@ -773,6 +777,11 @@ a.list#JAFClassics {
 	color: #FFF;
 	border-color: #8B0000;
     	background-color: var(--colorDark);
+}
+a.list#Hotstar {
+	color: #FFF;
+	border-color: #1f80e0;
+	background-color: #132d60;
 }
 
 .footer {
