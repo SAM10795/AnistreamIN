@@ -614,6 +614,10 @@ a#Hotstar {
 	background: #1f80e0;
 	color: #132d60;
 }
+a#bilibili {
+	background: #FFF;
+	color: #409eff;
+}
 
 
 .anime-score.card {
@@ -782,6 +786,11 @@ a.list#Hotstar {
 	color: #FFF;
 	border-color: #1f80e0;
 	background-color: #132d60;
+}
+a.list#bilibili {
+	background-color: #FFF;
+	color: #409eff;
+	border-color: #409eff;
 }
 
 .footer {
