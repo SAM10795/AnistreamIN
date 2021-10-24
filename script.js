@@ -40,6 +40,7 @@ var displayData = platformData;
 var platformChecked = 1;
 var free = 0;
 var plantowatch = 0;
+var ongoing = 0;
 var MAL = 1;
 var movies = 0;
 
@@ -90,6 +91,11 @@ function filterPTW(animeObject)
 {
 	let mal_id = animeObject[MAL_ID];
 	return series_ids.includes(mal_id);
+}
+
+function filterOngoing(animeObject)
+{
+	return animeObject[EPISODES].find(e=>e == "???") ;
 }
 
 function clickAlphAZ()
@@ -752,16 +758,32 @@ function clickFree()
 
 function clickPTW()
 {
-	var toggleFree = document.querySelector("button.labels.plantowatch");
+	var togglePTW = document.querySelector("button.labels.plantowatch");
 	if(plantowatch)
 	{
-		toggleFree.style.backgroundColor = "unset";
+		togglePTW.style.backgroundColor = "unset";
 		plantowatch = 0;
 	}
 	else
 	{
-		toggleFree.style.backgroundColor = "var(--colorCrimson)";
+		togglePTW.style.backgroundColor = "var(--colorCrimson)";
 		plantowatch = 1;
+	}
+	searchText();
+}
+
+function clickOngoing()
+{
+	var toggleOngoing = document.querySelector("button.labels.ongoing");
+	if(ongoing)
+	{
+		toggleOngoing.style.backgroundColor = "unset";
+		ongoing = 0;
+	}
+	else
+	{
+		toggleOngoing.style.backgroundColor = "var(--colorCrimson)";
+		ongoing = 1;
 	}
 	searchText();
 }
@@ -845,6 +867,10 @@ function searchText()
 	if(plantowatch)
 	{
 		displayData = displayData.filter(filterPTW);
+	}
+	if(ongoing)
+	{
+		displayData = displayData.filter(filterOngoing);
 	}
 	updateContainer();
 }

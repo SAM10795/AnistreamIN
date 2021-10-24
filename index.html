@@ -85,12 +85,17 @@
 		</div>
 		<div class = "action-bottom">
 			<div class="results"></div>
-			<button class = "labels plantowatch" onclick="clickPTW()" style="display: none">View PTW</button>
-			<button class = "labels free" onclick="clickFree()">View Free</button>
-			<button class = "labels animelist" onclick="clickAnimeList()">Switch to Anilist</button>
-			<button class = "material-icons movie" onclick="clickMovies()">movie</button>
-			<button class = "viewer material-icons" onclick="clickList()" style = "margin-left:8px;">view_list</button>
-			<button class = "viewer material-icons" onclick="clickCard()">view_module</button>
+			<div class="filteroptions">
+				<button class = "labels plantowatch" onclick="clickPTW()" style="display: none">View PTW</button>
+				<button class = "labels ongoing" onclick="clickOngoing()">View Ongoing</button>
+				<button class = "labels free" onclick="clickFree()">View Free</button>
+				<button class = "labels animelist" onclick="clickAnimeList()">Switch to Anilist</button>
+				<button class = "material-icons movie" onclick="clickMovies()">movie</button>
+			<div class="layoutoptions" style = "margin-left:8px;">
+				<button class = "viewer material-icons" onclick="clickList()">view_list</button>
+				<button class = "viewer material-icons" onclick="clickCard()">view_module</button>
+			</div>
+			</div>
 		</div>
 	</div>
 	<div class = "anime-container">

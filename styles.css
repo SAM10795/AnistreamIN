@@ -103,6 +103,10 @@ input#animelistinput {
 		font-size: 20px;
 		text-align: center;
 	}
+	
+	div.action-bottom {
+		flex-direction: column;
+	}
 }
 
 @media only screen and (max-width: 480px) {
@@ -195,8 +199,12 @@ input[type=text] {
 	margin-bottom: 4px;
 }
 
-.labels {
+.filteroptions {
 	display: flex;
+	background-color: var(--colorDark);
+}
+
+.labels {
 	border: 1px solid var(--colorCrimson);
 	color: var(--colorLight);
 	background-color: var(--colorDark);
