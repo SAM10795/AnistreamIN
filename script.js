@@ -310,6 +310,15 @@ function getStar(score)
 
 */
 
+function createShareText(event)
+{
+	var content = event.target.children[0].textContent;
+	navigator.clipboard.writeText(content);
+	var x = document.getElementById("snackbar");
+	x.className = "show";
+	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1500);
+}
+
 function makeanimeobjectcard(animeData)
 {
 	var animeObject = document.createElement("div");
@@ -388,11 +397,36 @@ function makeanimeobjectcard(animeData)
 	
 	var animeScoreIcon = document.createElement("span");
 	animeScoreIcon.classList.add('material-icons');
-	animeScoreIcon.style.fontSize = "12px";
+	animeScoreIcon.style.fontSize = "14px";
 	animeScoreIcon.textContent = "star";
 	
 	animeScore.appendChild(animeScoreIcon);
 	animeBrief.appendChild(animeScore);
+	
+	var animeShareIcon = document.createElement("span");
+	animeShareIcon.classList.add('anime-share',"card");
+	animeShareIcon.classList.add('material-icons');
+	animeShareIcon.style.fontSize = "16px";
+	animeShareIcon.textContent = "share";
+	animeShareIcon.addEventListener('click',createShareText);
+	
+	var shareText = document.createElement("p");
+	shareText.style.display = "none";
+	
+	var shareTextContent = "Watch "+animeData[ANIME_TITLE]+" ["+animeData[MAL_URL]+"] \nAvailable for streaming on following platform(s):\n\n"
+        for (i=0;i<animeData[PLATFORM].length;i++) {
+            if(isNaN(animeData[EPISODES][i] - 0) || animeData[EPISODES][i] == 1) {
+                shareTextContent = shareTextContent + animeData[PLATFORM][i] + "(" + animeData[EPISODES][i] + " ep)" + " :" + animeData[PLATFORM_URL][i] + "\n\n"
+            }
+            else {
+                shareTextContent = shareTextContent + animeData[PLATFORM][i] + "(" + animeData[EPISODES][i] + " eps)" + " :" + animeData[PLATFORM_URL][i] + "\n\n"
+            }
+        }
+	shareTextContent = shareTextContent + "[shared via https://anistream.in]"
+	shareText.textContent = shareTextContent;
+	animeShareIcon.appendChild(shareText);
+	
+	animeBrief.appendChild(animeShareIcon);
 	
 	animeObject.appendChild(animeBrief);
 	/*
@@ -494,6 +528,35 @@ function makeanimeobjectlist(animeData)
 		animeData[EPISODES][i] + " Eps";
 	
 		animePlatform.appendChild(animePlatformLink);
+		
+		if(i == platforms-1) 
+		{		
+			var animeShareIcon = document.createElement("span");
+			animeShareIcon.classList.add('anime-share',"list");
+			animeShareIcon.classList.add('material-icons');
+			animeShareIcon.style.fontSize = "18px";
+			animeShareIcon.textContent = "share";
+			animeShareIcon.addEventListener('click',createShareText);
+			
+			var shareText = document.createElement("p");
+			shareText.style.display = "none";
+		
+			var shareTextContent = "Watch "+animeData[ANIME_TITLE]+" ["+animeData[MAL_URL]+"] \nAvailable for streaming on following platform(s):\n\n"
+        		for (i=0;i<animeData[PLATFORM].length;i++) {
+ 				if(isNaN(animeData[EPISODES][i] - 0) || animeData[EPISODES][i] == 1) {
+               			shareTextContent = shareTextContent + animeData[PLATFORM][i] + "(" + animeData[EPISODES][i] + " ep)" + " :" + animeData[PLATFORM_URL][i] + "\n\n"
+            			}
+            			else {
+                			shareTextContent = shareTextContent + animeData[PLATFORM][i] + "(" + animeData[EPISODES][i] + " eps)" + " :" + animeData[PLATFORM_URL][i] + "\n\n"
+            			}
+        		}
+			shareTextContent = shareTextContent + "[shared via https://anistream.in]"
+			shareText.textContent = shareTextContent;
+			animeShareIcon.appendChild(shareText);
+					
+			animePlatform.appendChild(animeShareIcon);			
+		}
+		
 		animePlatformTop.appendChild(animePlatform);
 	}
 	animeBrief.appendChild(animePlatformTop);
