@@ -626,6 +626,10 @@ a#bilibili {
 	background: #FFF;
 	color: #409eff;
 }
+a#Roku {
+	background: #662d91;
+	color: #FFF;
+}
 
 
 .anime-score.card {
@@ -819,6 +823,11 @@ a.list#bilibili {
 	background-color: #FFF;
 	color: #409eff;
 	border-color: #409eff;
+}
+a.list#Roku {
+	background-color: #662d91;
+	color: #FFF;
+	border-color: #662d91;
 }
 
 .footer {
