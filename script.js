@@ -224,7 +224,8 @@ function sortTitle(a,b)
 
 function getDate(d)
 {
-	var dateParts = d.split("-");
+	var d1 = d.toString();
+	var dateParts = d1.split("-");
 	var date = new Date(dateParts[2],dateParts[1]-1,dateParts[0]);
 	return date;
 }
@@ -236,11 +237,33 @@ function sortDate(a,b)
 	
 	if(ascending)
 	{
-		return d1 > d2;
+		if(d1 > d2)
+		{
+			return 1;
+		}
+		else if(d2 > d1)
+		{
+			return -1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	else
 	{
-		return d2 > d1;
+		if(d2 > d1)
+		{
+			return 1;
+		}
+		else if(d1 > d2)
+		{
+			return -1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 }
 
