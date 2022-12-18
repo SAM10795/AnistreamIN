@@ -15,6 +15,8 @@ ANILIST_ID = "id_anilist"
 SHEET_EPISODES = "episodes"
 MAL_URL = "url_mal"
 ANILIST_URL = "url_anilist"
+DISPLAY = "display"
+PREMIERED = "premiered"
 
 SERIES_MAL_ID = "series_animedb_id"
 SERIES_MAL_STATUS = "my_status"
@@ -152,12 +154,31 @@ function clickDateNO()
 	updateContainer();
 }
 
+function clickSeasonON()
+{	
+	var topText = document.querySelector(".value");
+	topText.textContent = "Season (Old - New)";
+	ascending = false;
+	sortMethod = 3;
+	updateContainer();
+}
+
+
+function clickSeasonNO()
+{	
+	var topText = document.querySelector(".value");
+	topText.textContent = "Season (New - Old)";
+	ascending = true;
+	sortMethod = 3;
+	updateContainer();
+}
+
 function clickShuffle()
 {
 	var topText = document.querySelector(".value");
 	topText.textContent = "Randomize";
 	ascending = false;
-	sortMethod = 3;
+	sortMethod = 4;
 	updateContainer();
 }
 
@@ -181,6 +202,48 @@ function sortScoreMal(a,b)
 	else
 	{
 		return b[ANIME_SCORE_MAL] - a[ANIME_SCORE_MAL];
+	}
+}
+
+function getSeasonOrder(x)
+{
+	var season = x.split(" ")
+	var season_out = eval(season[1])*10;
+	switch(season[0])
+	{
+		case 'Fall':
+			return season_out + 3;
+		case 'Spring':
+			return season_out + 2;
+		case 'Summer':
+			return season_out + 1;
+		default:
+			return season_out;
+	}
+}
+
+function sortSeason(a,b)
+{
+	var s1 = a[PREMIERED];
+	var s2 = b[PREMIERED];
+	if((s1.length > 0) && (s2.length > 0))
+	{
+		if(ascending)
+		{
+			return getSeasonOrder(s2) - getSeasonOrder(s1);
+		}
+		else
+		{
+			return getSeasonOrder(s1) - getSeasonOrder(s2);
+		}
+	}
+	else if((s1.length > 0))
+	{
+		return -1;
+	}
+	else
+	{
+		return 1;
 	}
 }
 
@@ -234,6 +297,9 @@ function sortDate(a,b)
 {
 	var d1 = getDate(a[UPDATED]);
 	var d2 = getDate(b[UPDATED]);
+
+	var og1 = isNaN(a[EPISODES][0] - 0);	
+	var og2 = isNaN(b[EPISODES][0] - 0);
 	
 	if(ascending)
 	{
@@ -247,7 +313,18 @@ function sortDate(a,b)
 		}
 		else
 		{
-			return 0;
+			if(og1)
+			{
+				return -1;
+			}
+			else if(og2)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 	}
 	else
@@ -262,7 +339,18 @@ function sortDate(a,b)
 		}
 		else
 		{
-			return 0;
+			if(og1)
+			{
+				return -1;
+			}
+			else if(og2)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 	}
 }
@@ -347,6 +435,9 @@ function makeanimeobjectcard(animeData)
 	var animeObject = document.createElement("div");
 	animeObject.classList.add("anime-object","card");
 	animeObject.setAttribute('data-aos',"fade-up");
+
+	var dispLtd = (animeData[DISPLAY] == 2);
+	var ongoing = isNaN(animeData[EPISODES][0] - 0);
 	
 	var animeTitle = document.createElement("div");
 	animeTitle.classList.add("anime-title","card");
@@ -370,6 +461,38 @@ function makeanimeobjectcard(animeData)
 	animeImgcontainer.classList.add('anime-img-container',"card");
 	animeImgcontainer.style.backgroundImage = "url(\'"+animeData[IMAGE_URL]+"\')";
 	animeImgcontainer.title = "Anime Cover Image";
+
+	if(dispLtd || ongoing) 
+	{
+		var animeImgOverlay = document.createElement("div");
+		animeImgOverlay.classList.add('anime-img-overlay','card');
+
+		if(dispLtd)
+		{
+			var ImgOverlayContent_limited = document.createElement("div");
+			ImgOverlayContent_limited.classList.add('material-icons');	
+			ImgOverlayContent_limited.style.fontSize = "18px";
+			ImgOverlayContent_limited.style.textAlign = "start";
+			ImgOverlayContent_limited.style.flexGrow = 1;
+			ImgOverlayContent_limited.textContent = "new_releases";		
+			ImgOverlayContent_limited.title = "Limited Time";	
+			animeImgOverlay.appendChild(ImgOverlayContent_limited);
+		}
+
+		if(ongoing) 
+		{
+			var ImgOverlayContent_ongoing = document.createElement("div");	
+			ImgOverlayContent_ongoing.classList.add('material-icons');	
+			ImgOverlayContent_ongoing.style.fontSize = "18px";
+			ImgOverlayContent_ongoing.style.textAlign = "end";	
+			ImgOverlayContent_ongoing.style.flexGrow = 1;
+			ImgOverlayContent_ongoing.textContent = "event";			
+			ImgOverlayContent_ongoing.title = "Ongoing Anime";	
+			animeImgOverlay.appendChild(ImgOverlayContent_ongoing);
+		}
+	
+		animeImgcontainer.appendChild(animeImgOverlay);
+	}
 	
 	animeObject.appendChild(animeImgcontainer);
 	
@@ -478,11 +601,46 @@ function makeanimeobjectlist(animeData)
 	var animeObject = document.createElement("div");
 	animeObject.classList.add("anime-object","list");
 	animeObject.setAttribute('data-aos',"fade-up");
+
+	var dispLtd = (animeData[DISPLAY] == 2);
+	var ongoing = isNaN(animeData[EPISODES][0] - 0);
 	
 	var animeImgcontainer = document.createElement("div");
 	animeImgcontainer.classList.add('anime-img-container',"list");
 	animeImgcontainer.style.backgroundImage = "url(\'"+animeData[IMAGE_URL]+"\')";
 	animeImgcontainer.title = "Anime Cover Image";
+
+	if(dispLtd || ongoing) 
+	{
+		var animeImgOverlay = document.createElement("div");
+		animeImgOverlay.classList.add('anime-img-overlay','list');
+
+		if(dispLtd)
+		{
+			var ImgOverlayContent_limited = document.createElement("div");
+			ImgOverlayContent_limited.classList.add('material-icons');	
+			ImgOverlayContent_limited.style.fontSize = "16px";
+			ImgOverlayContent_limited.style.textAlign = "start";
+			ImgOverlayContent_limited.style.flexGrow = 1;
+			ImgOverlayContent_limited.textContent = "new_releases";		
+			ImgOverlayContent_limited.title = "Limited Time";
+			animeImgOverlay.appendChild(ImgOverlayContent_limited);
+		}
+
+		if(ongoing) 
+		{
+			var ImgOverlayContent_ongoing = document.createElement("div");	
+			ImgOverlayContent_ongoing.classList.add('material-icons');	
+			ImgOverlayContent_ongoing.style.fontSize = "16px";
+			ImgOverlayContent_ongoing.style.textAlign = "end";	
+			ImgOverlayContent_ongoing.style.flexGrow = 1;
+			ImgOverlayContent_ongoing.textContent = "event";			
+			ImgOverlayContent_ongoing.title = "Ongoing Anime";	
+			animeImgOverlay.appendChild(ImgOverlayContent_ongoing);
+		}
+	
+		animeImgcontainer.appendChild(animeImgOverlay);
+	}
 	
 	animeObject.appendChild(animeImgcontainer);
 	
@@ -709,7 +867,13 @@ function updateContainer()
 		}
 		case 3:
 		{
+			displayData.sort(sortSeason);
+			break;
+		}
+		case 4:
+		{
 			shuffleArray(displayData);
+			break;
 		}
 		default:
 		{

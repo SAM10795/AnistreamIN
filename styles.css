@@ -2,6 +2,7 @@
 
 :root {
 	--colorDark: #25283D;
+	--colorDarkTransparent: #25283DAF;
 	--colorCrimson: #A71D31;
 	--colorLight: #F1F0CC;
 	--colorGreen: #85BF86;
@@ -520,6 +521,14 @@ a:hover {
 	background-size: cover;
 }
 
+.anime-img-overlay.card {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	display: flex;
+	color: var(--colorLight);
+	background-color: var(--colorDarkTransparent);
+}
+
 .anime-brief.card {
 	display: flex;
 	flex-direction: row;
@@ -678,6 +687,14 @@ a#Roku {
 	background-color: var(--colorLight);
 	background-position: center top;
 	background-size: cover;
+}
+
+.anime-img-overlay.list {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	display: flex;
+	color: var(--colorLight);
+	background-color: var(--colorDarkTransparent);
 }
 
 .anime-brief.list {
