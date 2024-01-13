@@ -639,7 +639,10 @@ a#Roku {
 	background: #662d91;
 	color: #FFF;
 }
-
+a#TMS {
+	background: #1f80e0;
+	color: #FFF;
+}
 
 .anime-score.card {
 	padding: 4px;
@@ -845,6 +848,11 @@ a.list#Roku {
 	background-color: #662d91;
 	color: #FFF;
 	border-color: #662d91;
+}
+a.list#Roku {
+	background-color: #1f80e0;
+	color: #FFF;
+	border-color: #1f80e0;
 }
 
 .footer {
